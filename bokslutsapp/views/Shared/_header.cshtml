@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Bokslutsapp.Models._1930Bank>
+
+@{
+    ViewBag.Bilaga = "1";
+    ViewBag.Konto = "1930";
+    ViewBag.Title = "Bankkonton";
+    ViewBag.Company = "Företag AB";
+    ViewBag.OrgNr = "556800-5000";
+    ViewBag.FiscalYear = "2017-01-01 - 2017-12-31";
+    ViewBag.VerNr = "1";
+
+    ViewBag.testsumma = "786503,79";
+    ViewBag.testdiff = "0";
+    ViewBag.avskiljare = ", ";
+}
+
+<!--SIDHUVUD-->
+<div class="container">
+    <h2 style="text-align:left;">
+        @ViewBag.Title
+        <span style="float:right;"><h4>Bilaga @ViewBag.Bilaga</h4></span>
+    </h2>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4 style="text-align:left;">
+                <strong>@ViewBag.Company</strong>
+                <span style="float:right;">Räkenskapsår @ViewBag.FiscalYear</span>
+            </h4>
+            <span style="float:left;">
+                <h5>@ViewBag.OrgNr</h5>
+                <h5">
+                    <strong>Konton:</strong> @foreach (var Bilaga in Model)
+                    {@Bilaga.Konto @ViewBag.avskiljare}
+                    </h5>
+            </span>
+        </div>
+    </div>
+</div>

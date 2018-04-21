@@ -1,0 +1,303 @@
+﻿@model IEnumerable<Bokslutsapp.Models._1930Bank>
+
+@{
+    ViewBag.Bilaga = "1";
+    ViewBag.Konto = "2510";
+    ViewBag.Title = "Skatteberäkning";
+    ViewBag.Company = "Företag AB";
+    ViewBag.OrgNr = "556800-5000";
+    ViewBag.FiscalYear = "2017-01-01 - 2017-12-31";
+    ViewBag.VerNr = "1";
+
+    ViewBag.testsumma = "786503,79";
+    ViewBag.testdiff = "0";
+    ViewBag.avskiljare = ", ";
+    ViewBag.testskatt = "22%";
+    ViewBag.testver = "1";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+        <div class="content-wrapper">
+            @Html.Partial("_header")
+        </div>
+</body>
+</html>
+
+<!--BILAGA-->
+<div class="container">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <!--BERÄKNING AV ÅRETS SKATT-->
+                <th width="70%">Beräkning av årets skattekostnad</th>
+                <th width="5%"></th>
+                <th width="15%">Belopp</th>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Resultat före skatt</td>
+                <td width="5%" align="center" contenteditable='false'></td>
+                <td width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Ej avdragsgilla kostnader enligt bilaga</td>
+                <td width="5%" align="center" contenteditable='false'>+</td>
+                <td width="15%" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Ej skattepliktiga intäkter enligt bilaga</td>
+                <td width="5%" align="center" contenteditable='false'>-</td>
+                <td width="15%" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Skattemässiga justeringar enligt bilaga</td>
+                <td width="5%" align="center" contenteditable='false'>+/-</td>
+                <td width="15%" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Schablonintäkt periodiseringsfond</td>
+                <td width="5%" align="center" contenteditable='false'>+</td>
+                <td width="15%" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Underskottsavdrag från tidigare år som utnyttjas detta år</td>
+                <td width="5%" align="center" contenteditable='false'>-</td>
+                <td width="15%" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'><strong>Beräknat skattemässigt resultat</strong></td>
+                <td width="5%" align="center" contenteditable='false'><strong>=</strong></td>
+                <td width="15%" align="right" contenteditable='false'><stong></stong></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'><strong>Skatt för årets resultat</strong></td>
+                <td width="5%" align="center" contenteditable='false'><strong>@ViewBag.testskatt</strong></td>
+                <td width="15%" align="right" contenteditable='false'><stong></stong></td>
+            </tr>
+    </table>
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <!--UNDERSKOTTSAVDRAG-->
+                <th width="70%">Beräkning av underskottsavdrag</th>
+                <th width="5%"></th>
+                <th width="15%"></th>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Underskottsavdrag enligt föregående års beskattning</td>
+                <td width="5%" align="center" contenteditable='false'>+</td>
+                <td width="15%" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Underskottsavdrag som utnyttjas detta år</td>
+                <td width="5%" align="center" contenteditable='false'>-</td>
+                <td width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'>Årets skattemässiga underskott</td>
+                <td width="5%" align="center" contenteditable='false'>+</td>
+                <td width="15%" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'><strong>Underskottsavdrag som sparas tills nästa år</strong></td>
+                <td width="5%" align="center" contenteditable='false'><strong>=</strong></td>
+                <td width="15%" align="right" contenteditable='false'><stong></stong></td>
+            </tr>
+    </table>
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <!--AVSTÄMNING AV FG ÅRS SKATTESKULD-->
+                <th colspan="8" width="70%">Avstämning av föregående års skatteskuld</th>
+                <th colspan="1" width="5%"></th>
+                <th colspan="3" width="15%"></th>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Föregående års skattekostnad enligt slutskattsedel</td>
+                <td colspan="1" align="center" contenteditable='false'>+</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Preliminärt inbetald skatt för föregående år som avgår</td>
+                <td colspan="1" align="center" contenteditable='false'></td>
+                <td colspan="3" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="2" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Perioder</td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>X</td>
+                <td colspan="3" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
+                <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
+                <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="2" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Perioder</td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>X</td>
+                <td colspan="3" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
+                <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
+                <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="2" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Perioder</td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>X</td>
+                <td colspan="3" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
+                <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
+                <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Kompletteringsinbetald skatt (-) / återbetalad skatt (+) för föregående år</td>
+                <td colspan="1" align="center" contenteditable='false'>+/-</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Avgår delbetalning av restskatt för föregående år</td>
+                <td colspan="1" align="center" contenteditable='false'>-</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'><strong>Summa skatteskuld (+) / fordran (-) för föregående år</strong></td>
+                <td colspan="1" align="center" contenteditable='false'><strong>=</strong></td>
+                <td colspan="3" align="right" contenteditable='false'><strong></strong></td>
+            </tr>
+    </table>
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <!--AVSTÄMNING AV DETTA ÅRETS SKATTESKULD-->
+                <th colspan="8" width="70%">Avstämning av detta årets skatteskuld</th>
+                <th colspan="1" width="5%"></th>
+                <th colspan="3" width="15%"></th>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Skatt på det beskattningsbara resultatet enligt beräkning ovan</td>
+                <td colspan="1" align="center" contenteditable='false'>+</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Preliminärt inbetald skatt för detta år som avgår</td>
+                <td colspan="1" align="center" contenteditable='false'></td>
+                <td colspan="3" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="2" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Perioder</td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>X</td>
+                <td colspan="3" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
+                <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
+                <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="2" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Perioder</td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>X</td>
+                <td colspan="3" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
+                <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
+                <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="2" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Perioder</td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>X</td>
+                <td colspan="3" width="20%" align="center" contenteditable='true'></td>
+                <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
+                <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
+                <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'><strong>Summa skatteskuld (+) / fordran (-) för detta år</strong></td>
+                <td colspan="1" align="center" contenteditable='false'><strong>=</strong></td>
+                <td colspan="3" align="right" contenteditable='false'><strong></strong></td>
+            </tr>
+    </table>
+
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <!--AVSTÄMNING AV RESTBETALNING/ÅTERBETALNING-->
+                <th colspan="8" width="70%">Beräkning av belopp att restbetala/återfå</th>
+                <th colspan="1" width="5%"></th>
+                <th colspan="3" width="15%"></th>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Årets skatteskuld (+) / fordran (-) för detta år enligt ovan</td>
+                <td colspan="1" align="center" contenteditable='false'>=</td>
+                <td colspan="3" align="right" contenteditable='false'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Avgår preliminärskatt som skall erläggas efter bokslutsdagen</td>
+                <td colspan="1" align="center" contenteditable='false'>-</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Avgår kompletteringsinbetald skatt för detta år</td>
+                <td colspan="1" align="center" contenteditable='false'>-</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Tillkommer beräknad löneskatt</td>
+                <td colspan="1" align="center" contenteditable='false'>+</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Tillkommer beräknad avkastningsskatt</td>
+                <td colspan="1" align="center" contenteditable='false'>+</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'>Tillkommer beräknad fastighetsskatt</td>
+                <td colspan="1" align="center" contenteditable='false'>+</td>
+                <td colspan="3" align="right" contenteditable='true'></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" contenteditable='false'><strong>Belopp som bör betalas (+) / återbetalas (-) </strong></td>
+                <td colspan="1" align="center" contenteditable='false'><strong>=</strong></td>
+                <td colspan="3" align="right" contenteditable='false'><strong>@ViewBag.testsumma</strong></td>
+            </tr>
+        </thead>
+    </table>
+
+    <!--ÅRETS SKATTESKULD-->
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <td width="70%" align="left" contenteditable='false'><strong>Totalsumma årets skatteskuld (+) / fordran (-) i bokslutet för detta år enligt ovan</strong></td>
+                <td width="5%" align="center" contenteditable='false'><strong>=</strong></td>
+                <td width="15%" align="right" contenteditable='false'><strong></strong></td>
+            </tr>
+            <tr>
+                <th colspan="2"> <strong>Belopp kvar att specificera</strong></th>
+                <td align="right"><strong>@ViewBag.testdiff</strong></td>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="container">
+   <p align="right">
+            <a href="#" class="btn btn-success btn-lg">
+                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Töm bilaga"></span>
+            </a>
+            <a href="#" class="btn btn-success btn-lg">
+                <span class="glyphicon glyphicon-ok" data-toggle="tooltip" title="Klarmarkera bilaga"></span>
+        </a>
+    </p>
+</div>
+
+
+<!--Konteringsvy-->
+<div class="content-wrapper">
+    @Html.Partial("_footer")
+</div>

@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Kontologik";
+}
+
+<html>
+    <head>
+        <div class="container">
+            <style>
+                #div1 {
+                    float: left;
+                    width:  15%;
+                    height: 100%;
+                    margin: 10px;
+                    padding: 10px;
+                    border: 1px solid white;
+                    background-color: whitesmoke;
+                }
+                #div2 {
+                    float: left;
+                    width: 35%;
+                    height: 100%;
+                    margin: 10px;
+                    padding: 10px;
+                    border: 1px solid white;
+                    background-color: whitesmoke;
+                }
+                #div3 {
+                    float: left;
+                    width: 40%;
+                    height: 100%;
+                    align-content: center;
+                    margin: 10px;
+                    padding: 10px;
+                    border: 1px solid white;
+                    background-color: whitesmoke;
+                }
+
+            </style>
+            <script>
+                function allowDrop(ev) {
+                    ev.preventDefault();
+                }
+
+                function drag(ev) {
+                    ev.dataTransfer.setData("text", ev.target.id);
+                }
+
+                function drop(ev) {
+                    ev.preventDefault();
+                    var data = ev.dataTransfer.getData("text");
+                    ev.target.appendChild(document.getElementById(data));
+                }
+
+                function dropcopy(ev) {
+                    ev.preventDefault();
+                    var data = ev.dataTransfer.getData("Text");
+                    var copyimg = document.createElement("p");
+                    var original = document.getElementById(data);
+                    copyimg.innerHTML = original.innerHTML;
+                    ev.target.appendChild(copyimg);
+                }
+            </script>
+    </head>
+    <body>
+
+        <h2>Kontologik</h2>
+        Konton skall läsas in ifrån bokföringen. Endast ett konto skall kunna läggas på en bilaga. Bilagsmallar skall kopieras till logik, därefter skall konton kunna flyttas till mallen. En mall skall kunna användas under flera rubriker i logiken. Konton skall kunna flyttas tillbaka till fältet konto (tas bort). Bilagor skall kunna tas bort från logiken. Rubriker i logiken är kopplade till SRU-koder. När konton byter rubrik, skall SRU-koden ändras. Konton skall endast kunna läggas på en bilaga och inte direkt under rubrik i logiken.
+        <!--Konton-->
+        <div class="well well-lg" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h4>Konton</h4>
+            <table>
+                <tr><div id="drag20" class="well well-sm" draggable="true" ondragstart="drag(event)">1930 Bank</div></tr>
+                <tr><div id="drag21" class="well well-sm" draggable="true" ondragstart="drag(event)">1931 Bank</div></tr>
+                <tr><div id="drag22" class="well well-sm" draggable="true" ondragstart="drag(event)">1932 Bank</div></tr>
+                <tr><div id="drag23" class="well well-sm" draggable="true" ondragstart="drag(event)">1933 Bank</div></tr>
+            </table>
+        </div>
+
+        <!--Bilagor-->
+        <div class="well well-lg" id="div2" ondragover="allowDrop(event)">
+            <h4>Mallar för bokslutsbilagor</h4>
+            <table>
+                <tr><div id="drag2" class="well well-sm" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)">Bilaga bank</div></tr>
+                <tr><div id="drag3" class="well well-sm" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)">Bilaga skatt</div></tr>
+                <tr><div id="drag4" class="well well-sm" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)">Bilaga värdepapper</div></tr>
+            </table>
+        </div>
+
+        <!--Logik-->
+        <div class="well well-lg" id="div3" draggable="false" ondrop="dropcopy(event)" ondragover="allowDrop(event)">
+            <h4>Kontologik enligt Årsredovisningslagen</h4>
+            <table>
+                <tr><div id="drag5" class="well well-sm" ondragover="allowDrop(event)">Upparbetad men ej fakturerad intäkt</div></tr>
+                <tr><div id="drag6" class="well well-sm" ondragover="allowDrop(event)">Förutbetalda kostnader och upplupna intäkter</div></tr>
+                <tr><div id="drag7" class="well well-sm" ondragover="allowDrop(event)">Kortfristiga placeringar</div></tr>
+                <tr><div id="drag8" class="well well-sm" ondragover="allowDrop(event)">Andelar ikoncernföretag</div></tr>
+                <tr><div id="drag9" class="well well-sm" ondragover="allowDrop(event)">Övriga kortfristigaplaceringar</div></tr>
+                <tr><div id="drag10" class="well well-sm" ondragover="allowDrop(event)">Kassa och bank</div></tr>
+                <tr><div id="drag11" class="well well-sm" ondragover="allowDrop(event)">Redovisningsmedel</div></tr>
+            </table>
+        </div>
+        </div>
+    </body>   
+</html>

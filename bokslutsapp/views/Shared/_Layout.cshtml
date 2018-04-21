@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Bokslutsprogram", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <ul class="nav nav-tabs">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <!--MENY Inställningar-->
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Inställningar <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Kontologik", "Kontologik", "Home")</li><!--knappens namn, bilagans namn, mappen bilaga-->
+                    </ul>
+                <li>
+                <!--MENY Bilagor-->
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Bilagor <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Bank", "Bank", "Bilaga")</li><!--knappens namn, bilagans namn, mappen bilaga-->
+                        <li>@Html.ActionLink("Värdepapper", "Värdepapper", "Bilaga")</li>
+                        <li>@Html.ActionLink("Skatt", "Skatt", "Bilaga")</li>
+                    </ul>
+                <li>
+                    <span style="float:right;">
+                        <a href="#" class="btn btn-lg">
+                            <span class="glyphicon glyphicon-book" data-toggle="tooltip" title="Öppna huvudbok"></span>
+                        </a>
+                        <a href="#" class="btn btn-lg">
+                            <span class="glyphicon glyphicon-cog" data-toggle="tooltip" title="Inställningar"></span>
+                        </a>
+                        <a href="#" class="btn btn-lg">
+                            <span onclick="window.print();return false;" class="glyphicon glyphicon-print" data-toggle="tooltip" title="Skriv ut bilaga"></span>
+                        </a>
+                    </span>
+                </li>
+                </li>
+                ...
+            </ul>
+        </div>
+    </div>
+ 
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
