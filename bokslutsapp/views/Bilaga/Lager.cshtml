@@ -35,32 +35,32 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th colspan="4"><strong>Beräkning av lagervärde enligt lägsta värdets princip</strong></th>
-                <th colspan="2"><strong>Specifikation av anskaffningsutgifter</strong></th>
+                <th colspan="4"><strong>Inventerat lager per bokslutsdagen</strong></th>
+                <th colspan="2"><strong>Beräkning av anskaffningsutgifter</strong></th>
                 <th colspan="2"><strong>Beräkning av marknadsvärde</strong></th>
             </tr>
             <tr>
-                <th colspan="1" width="2%">Artikelnr</th>
-                <th colspan="1" width="33%">Vara</th>
-                <th colspan="1" width="2%">Antal</th>
-                <th colspan="1" width="12%">Enhet</th>
-                <th colspan="1" width="15%">Ansk.värde/st</th>
-                <th colspan="1" width="6%">Anskaffningsvärde</th>
-                <th colspan="1" width="15%">Verkligt värde/st</th>
-                <th colspan="1" width="15%">Verkligt värde</th>
+                <th colspan="1" width="7%">Artikelnr</th>
+                <th colspan="1" width="28%">Vara</th>
+                <th colspan="1" width="11%">Inventerat antal</th>
+                <th colspan="1" width="2%">Enhet</th>
+                <th colspan="1" width="9%">Ansk.värde/st</th>
+                <th colspan="1" width="17%">Anskaffningsvärde</th>
+                <th colspan="1" width="9%">Verkligt värde/st</th>
+                <th colspan="1" width="17%">Verkligt värde</th>
             </tr>
             @for (var i = 0; i < 6; i++)
             {
-            <tr>
-                <td colspan="1" width="35%" align="left" contenteditable='true'></td>
-                <td colspan="1" width="35%" align="left" contenteditable='true'></td>
-                <td colspan="1" width="2%" align="center" contenteditable='true'></td>
-                <td colspan="1" width="12%" align="right" contenteditable='true'></td>
-                <td colspan="1" width="15%" align="right" contenteditable='true'></td>
-                <td colspan="1" width="6%" align="right" contenteditable='true'></td>
-                <td colspan="1" width="15%" align="right" contenteditable='true'></td>
-                <td colspan="1" width="15%" align="right" contenteditable='true'></td>
-            </tr>
+                <tr>
+                    <td colspan="1" width="7%" align="left" contenteditable='true'></td>
+                    <td colspan="1" width="28%" align="left" contenteditable='true'></td>
+                    <td colspan="1" width="11%" align="right" contenteditable='true'></td>
+                    <td colspan="1" width="2%" align="center" contenteditable='true'></td>
+                    <td colspan="1" width="9%" align="right" contenteditable='true'></td>
+                    <td colspan="1" width="15%" align="right" contenteditable='true'></td>
+                    <td colspan="1" width="9%" align="right" contenteditable='true'></td>
+                    <td colspan="1" width="15%" align="right" contenteditable='true'></td>
+                </tr>
             }
             <tr>
                 <td colspan="4"><strong>Summa</strong></td>
@@ -71,33 +71,48 @@
             </tr>
     </table>
 
-    <!--BERÄKNING AV FÅLLA & SKATTEMÄSSIGA JUSTERINGAR-->
+    <!--BERÄKNING AV LAGERFÖRÄNDRING-->
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th colspan="2"><strong>Beräkning av aktiefålla</strong></th>
-                <th colspan="2"><strong>Skattemässiga justeringar</strong></th>
+                <th width="86%"><strong>Lagerförändring</strong></th>
+                <th width="14%"><strong>Belopp</strong></th>
             </tr>
             <tr>
-                <td colspan="1" width="36%">Årets realisationsresultat</td>
-                <td colspan="1" width="12%" align="right" contenteditable='true'>@String.Format("{0:#,###.##}", ViewBag.testsumma)</td>
-                <td colspan="1" width="38%">Bokfört värde enligt huvudbok</td>
-                <td colspan="1" width="14%" align="right" contenteditable='true'>@String.Format("{0:#,###.##}", ViewBag.testsumma)</td>
+                <td contenteditable='true' align="left">Lagersaldo enligt huvudboken</td>
+                <td contenteditable='true' align="right"></td>
             </tr>
             <tr>
-                <td colspan="1" width="36%">Avdrag för ansamlade förluster i fållan från föregående år</td>
+                <td contenteditable='true' align="left">Inventerat lagersaldo</td>
+                <td contenteditable='true' align="right"></td>
+            </tr>
+            <tr>
+                <td><strong>Lagerförändring</strong></td>
+                <td align="right"><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
+            </tr>
+    </table>
+
+    <!--BERÄKNING AV INKURANSAVDRAG-->
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="2"><strong>Beräkning av lagervärde enligt lägsta värdets princip</strong></th>
+                <th colspan="2"><strong>Beräkning av lagervärde enligt 3%-regeln (Skattemässigt inkuransavdrag)</strong></th>
+            </tr>
+            <tr>
+                <td colspan="1" width="36%">Lagervärde enligt lägsta värdets princip</td>
                 <td colspan="1" width="12%" align="right" contenteditable='true'>@String.Format("{0:#,###.##}", ViewBag.testsumma)</td>
-                <td colspan="1" width="38%">Tidigare gjorda nedskrivningar enligt huvudbok</td>
+                <td colspan="1" width="38%">Inventerat lagervärde till anskaffningsvärde</td>
                 <td colspan="1" width="14%" align="right" contenteditable='true'>0</td>
             </tr>
             <tr>
-                <td colspan="1" width="36%"><strong>Belopp som skall tas upp till beskattning</strong></td>
-                <td colspan="1" width="12%" align="right" contenteditable='true'><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
-                <td colspan="1" width="38%">Årets nedskrivning av latent förlust enligt beräkning ovan</td>
+                <td colspan="1" width="36%">Inkuransavdrag enligt lägsta värdets princip</td>
+                <td colspan="1" width="12%" align="right" contenteditable='true'>@String.Format("{0:#,###.##}", ViewBag.testsumma)</td>
+                <td colspan="1" width="38%">Skattemässigt inkuransavdrag - 3%</td>
                 <td colspan="1" width="14%" align="right" contenteditable='true'>0</td>
             </tr>
             <tr>
-                <td colspan="1" width="36%"><strong>Förluster i fållan som rullas vidare till nästa år</strong></td>
+                <td colspan="1" width="36%"><strong>Utgående lagervärde enligt lägsta värdets princip</strong></td>
                 <td colspan="1" width="12%" align="right" contenteditable='false'><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
                 <td colspan="1" width="38%"><strong>Utgående bokfört värde</strong></td>
                 <td colspan="1" width="14%" align="right" contenteditable='true'><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
