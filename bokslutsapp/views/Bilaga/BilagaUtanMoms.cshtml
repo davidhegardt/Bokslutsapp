@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Bokslutsapp.Models._1930Bank>
+
+@{
+    ViewBag.Bilaga = "1";
+    ViewBag.Konto = "1930";
+    ViewBag.Title = "Bankkonton";
+    ViewBag.Company = "Företag AB";
+    ViewBag.OrgNr = "556800-5000";
+    ViewBag.FiscalYear = "2017-01-01 - 2017-12-31";
+    ViewBag.VerNr = "1";
+
+    ViewBag.testsumma = "786503,79";
+    ViewBag.testdiff = "0";
+    ViewBag.avskiljare = ", ";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<!--Sidhuvud-->
+<body>
+    <div class="content-wrapper">
+        @Html.Partial("_header")
+    </div>
+</body>
+</html>
+
+<!--BILAGA-->
+<div class="container">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <!--KONTON-->
+            <tr>
+                <th width="52%" contenteditable='true'>Benämning</th>
+                <th width="5%"  contenteditable='true'>Referens</th>
+                <th width="10%" contenteditable='true'>Konto</th>
+                <th width="14%" contenteditable='true'>Belopp</th>
+                <th width="14%">Belopp</th>
+            </tr>
+            @for (var i = 0; i < 10; i++)
+            {
+                <tr>
+                    <td width="52%" align="left"    contenteditable='true'></td>
+                    <td width="5%"  align="center"  contenteditable='true'></td>
+                    <td width="10%" align="center"  contenteditable='true'></td>
+                    <td width="14%" align="right"   contenteditable='true'></td>
+                    <td width="14%" align="right"   contenteditable='true'></td>
+                </tr>
+             }
+            <tr>
+                <th colspan="4"><strong>Summa</strong></th>
+                <td align="right"><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
+            </tr>
+        </thead>
+    </table>
+
+
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <!--Summarad-->
+        <thead>
+            <tr>
+                <th width="86%"><strong>Totalsumma enligt bilagan</strong></th>
+                <td width="14%" align="right"><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
+            </tr>
+            <tr>
+                <th width="86%"><strong>Saldo enligt huvudbok</strong></th>
+                <td width="14%" align="right"><strong>@ViewBag.testdiff</strong></td>
+            </tr>
+            <tr>
+                <th width="86%"><strong>Belopp kvar att specificera</strong></th>
+                <td width="14%" align="right"><strong>@ViewBag.testdiff</strong></td>
+            </tr>
+        </thead>
+    </table>
+
+    <p align="right">
+        <a href="#" class="btn btn-success btn-lg">
+            <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Töm bilaga"></span>
+        </a>
+        <a href="#" class="btn btn-success btn-lg">
+            <span class="glyphicon glyphicon-ok" data-toggle="tooltip" title="Klarmarkera bilaga"></span>
+        </a>
+    </p>
+</div>
+
+<!--Konteringsvy-->
+<div class="content-wrapper">
+    @Html.Partial("_footer")
+</div>
+

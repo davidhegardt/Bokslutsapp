@@ -196,6 +196,8 @@
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Home\Kontologik.cshtml" />
+    <Content Include="Views\Bilaga\BilagaUtanMoms.cshtml" />
+    <Content Include="Views\Bilaga\Lager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

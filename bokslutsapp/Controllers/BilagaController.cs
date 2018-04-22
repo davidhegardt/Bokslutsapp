@@ -42,5 +42,17 @@ namespace Bokslutsapp.Controllers
             var Bilagor = GetBilagor();
             return View(Bilagor);
         }
+
+        public ActionResult BilagaUtanMoms()
+        {
+            var Bilagor = GetBilagor();
+            return View(Bilagor);
+        }
+
+        public ActionResult Lager()
+        {
+            var Bilagor = GetBilagor();
+            return View(Bilagor);
+        }
     }
 }
