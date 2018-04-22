@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bokslutsapp.Models;
+using SieParserLibrary;
 
 namespace Bokslutsapp.Controllers
 {
@@ -23,6 +24,8 @@ namespace Bokslutsapp.Controllers
 
         private IEnumerable<_1930Bank> GetBilagor()
         {
+            SieManager manager = new SieManager();            
+
             return new List<_1930Bank> {
             new _1930Bank { Id = 1, Beskrivning = "Affärskonto SHB-590123123", Konto = 1930, Ks = 1, Pr = 1, Belopp = 127374.58f },
             new _1930Bank { Id = 2, Beskrivning = "Sparkonto SHB-590456123", Konto = 1931, Ks = 1, Pr = 1, Belopp = 567374.20f },
