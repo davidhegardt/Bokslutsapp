@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Bokslutsapp.Models._1930Bank>
+@{
     ViewBag.Title = "Kontologik";
 }
 
@@ -8,7 +9,7 @@
             <style>
                 #div1 {
                     float: left;
-                    width:  15%;
+                    width:  25%;
                     height: 100%;
                     margin: 10px;
                     padding: 10px;
@@ -17,7 +18,7 @@
                 }
                 #div2 {
                     float: left;
-                    width: 35%;
+                    width: 30%;
                     height: 100%;
                     margin: 10px;
                     padding: 10px;
@@ -26,7 +27,7 @@
                 }
                 #div3 {
                     float: left;
-                    width: 40%;
+                    width: 35%;
                     height: 100%;
                     align-content: center;
                     margin: 10px;
@@ -69,10 +70,15 @@
         <div class="well well-lg" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
             <h4>Konton</h4>
             <table>
-                <tr><div id="drag20" class="well well-sm" draggable="true" ondragstart="drag(event)">1930 Bank</div></tr>
+                @foreach (var Bilaga in Model)
+                {
+                    
+                    <tr><div id="drag20" class="well well-sm" draggable="true" ondragstart="drag(event)">@Bilaga.Konto @Bilaga.Beskrivning</div></tr>
+                }
+                @*<tr><div id="drag20" class="well well-sm" draggable="true" ondragstart="drag(event)">1930 Bank</div></tr>
                 <tr><div id="drag21" class="well well-sm" draggable="true" ondragstart="drag(event)">1931 Bank</div></tr>
                 <tr><div id="drag22" class="well well-sm" draggable="true" ondragstart="drag(event)">1932 Bank</div></tr>
-                <tr><div id="drag23" class="well well-sm" draggable="true" ondragstart="drag(event)">1933 Bank</div></tr>
+                <tr><div id="drag23" class="well well-sm" draggable="true" ondragstart="drag(event)">1933 Bank</div></tr>*@
             </table>
         </div>
 
