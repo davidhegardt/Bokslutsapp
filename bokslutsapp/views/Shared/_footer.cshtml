@@ -15,8 +15,7 @@
 }
 
 <!--KONTERINGSFÄLT-->
-<div class="container">
-    <table id="example" class="table table-striped table-bordered" style="width:100%">
+    <table id="example" class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th colspan="2"><strong>Bokföringsorder</strong></th>
@@ -27,21 +26,21 @@
             </tr>
             <tr>
                 <th colspan="2" width="15%">Konto</th>
-                <th colspan="6" width="59%">Kontonamn</th>
+                <th colspan="6" width="60%">Kontonamn</th>
                 <th colspan="1" width="5%">Ks</th>
                 <th colspan="1" width="5%">Pr</th>
-                <th colspan="2" width="16%">Belopp</th>
+                <th colspan="2" width="15%">Belopp</th>
             </tr>
         </thead>
         <tbody>
             @for (var i = 0; i < 4; i++)
             {
                 <tr>
-                    <td colspan="2" width="15%" align="left" contenteditable='true'></td>
-                    <td colspan="6" width="59%" align="left" contenteditable='true'></td>
-                    <td colspan="1" width="5%" align="center" contenteditable='true'></td>
-                    <td colspan="1" width="5%" align="center" contenteditable='true'></td>
-                    <td colspan="2" width="16%" align="right" contenteditable='true'></td>
+                    <td colspan="2" align="left" contenteditable='true'></td>
+                    <td colspan="6" align="left" contenteditable='true'></td>
+                    <td colspan="1" align="center" contenteditable='true'></td>
+                    <td colspan="1" align="center" contenteditable='true'></td>
+                    <td colspan="2" align="right" contenteditable='true'></td>
                 </tr>
             }
         </tbody>
@@ -65,4 +64,3 @@
             <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" title="Registrera bokning"></span>
         </a>
     </p>
-</div>

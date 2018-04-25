@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Anläggningsregister";
+    ViewBag.KontoTest = "1210";
+    ViewBag.testsum = "9794047,83";
+}
+
+<h2>Anläggningsregister</h2>
+
+    <style>
+        #Table {
+            font-size: 12px;
+        }
+        
+        #Rubrik {
+            font-size: 13px;
+            font-style: initial;
+        }
+    </style>
+
+    <table id="Table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <!--ANSKAFFNINGAR & FÖRSÄLJNING/UTRANGERING-->
+            <tr>
+                <th id="Rubrik" colspan="7">Förteckning över anskaffade anläggningstillgångar</th>
+                <th id="Rubrik" colspan="5">Förteckning över försålda & utrangerade anläggningstillgångar</th>
+            </tr>
+            <tr>
+                <th width="4%">ID</th>
+                <th width="5%">Konto</th>
+                <th width="20%">Benämning</th>
+                <th width="6%">Ver nr</th>
+                <th width="10%">Ansk.datum</th>
+                <th width="4%">Livslängd</th>
+                <th width="10%">Ansk.värde</th>
+                <th width="6%">Ver nr</th>
+                <th width="11%">Förs.pris</th>
+                <th width="11%">Resultat</th>
+                <th width="12%">Värde kvarv. tillg.</th>
+            </tr>
+            @for(var i=0; i<6; i++)
+            {
+            <tr>
+                <td align="left" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="left" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="right" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="right" contenteditable="true"></td>
+                <td align="right" contenteditable="false"></td>
+                <td align="right" contenteditable="false"></td>
+            </tr>
+            }
+            <tr>
+                <td colspan="6" align="left"><strong>Summa</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="left"></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+            </tr>
+    </table>
+    <table id="Table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <!--KVARVARANDE ANL.T. & AVSKRIVNINGAR-->
+            <tr>
+                <th id="Rubrik" colspan="3">Förteckning över kvarvarande anläggningstillgångar</th>
+                <th id="Rubrik" colspan="8">Förteckning över avskrivningar</th>
+            </tr>
+            <tr>
+                <th width="3.5%">ID</th>
+                <th width="20%">Benämning</th>
+                <th width="10%">Ansk.värde</th>
+                <th width="5%">Konto</th>
+                <th width="8%">Avsk. fr.o.m.</th>
+                <th width="7%">Avsk./år</th>
+                <th width="8.5%">Ing.avskr.</th>
+                <th width="7%">Per.avskr.</th>
+                <th width="8.5%">Utg.avskr.</th>
+                <th width="10.5%">Restvärde</th>
+            </tr>
+            @for (var i = 0; i < 6; i++)
+            {
+            <tr>
+                <td align="left" contenteditable="false"></td>
+                <td align="left" contenteditable="false"></td>
+                <td align="right" contenteditable="false"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="false"></td>
+                <td align="right" contenteditable="true"></td>
+                <td align="right" contenteditable="false"></td>
+                <td align="right" contenteditable="true"></td>
+                <td align="right" contenteditable="false"></td>
+                <td align="right" contenteditable="false"></td>
+            </tr>
+            }
+            <tr>
+                <td colspan="2" align="left"><strong>Summa</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="2" align="left"></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+            </tr>
+</table>

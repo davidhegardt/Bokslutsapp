@@ -30,7 +30,8 @@ namespace Bokslutsapp.Controllers
             List<Konto> kontoLista = manager.getKontoList(path);
             int currId = 0;
             List<_1930Bank> bankLista = new List<_1930Bank>();
-            foreach(Konto k in kontoLista)
+            /*
+            foreach (Konto k in kontoLista)
             {
                 currId++;
                 _1930Bank newBank = new _1930Bank();
@@ -42,7 +43,7 @@ namespace Bokslutsapp.Controllers
                 newBank.Pr = 1;
                 bankLista.Add(newBank);
             }
-
+            */
             return bankLista;
             /*
             return new List<_1930Bank> {
@@ -73,6 +74,30 @@ namespace Bokslutsapp.Controllers
         }
 
         public ActionResult Lager()
+        {
+            var Bilagor = GetBilagor();
+            return View(Bilagor);
+        }
+
+        public ActionResult Periodiseringar()
+        {
+            var Bilagor = GetBilagor();
+            return View(Bilagor);
+        }
+
+        public ActionResult EgetKapital()
+        {
+            var Bilagor = GetBilagor();
+            return View(Bilagor);
+        }
+
+        public ActionResult Kassa()
+        {
+            var Bilagor = GetBilagor();
+            return View(Bilagor);
+        }
+
+        public ActionResult UnderbilagaSkatt()
         {
             var Bilagor = GetBilagor();
             return View(Bilagor);

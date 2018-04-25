@@ -30,7 +30,6 @@
 </body>
 </html>
 
-<div class="container">
     <!--AVSTÄMNING VÄRDEPAPPERSINNEHAV-->
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
@@ -89,8 +88,8 @@
                 <td colspan="1" width="14%" align="right" contenteditable='true'>0</td>
             </tr>
             <tr>
-                <td colspan="1" width="36%"><strong>Belopp som skall tas upp till beskattning</strong></td>
-                <td colspan="1" width="12%" align="right" contenteditable='true'><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
+                <td colspan="1" width="36%">Belopp som skall tas upp till beskattning</td>
+                <td colspan="1" width="12%" align="right" contenteditable='true'>@String.Format("{0:#,###.##}", ViewBag.testsumma)</td>
                 <td colspan="1" width="38%">Årets nedskrivning av latent förlust enligt beräkning ovan</td>
                 <td colspan="1" width="14%" align="right" contenteditable='true'>0</td>
             </tr>
@@ -151,7 +150,7 @@
             </a>
         </p>
     </table>
-</div>
+
 <!--Konteringsvy-->
 <div class="content-wrapper">
     @Html.Partial("_footer")

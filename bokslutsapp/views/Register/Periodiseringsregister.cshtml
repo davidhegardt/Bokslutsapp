@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Periodiseringsregister";
+    ViewBag.KontoTest = "1210";
+    ViewBag.testsum = "9794047,83";
+}
+
+<h2>Periodiseringsregister</h2>
+
+    <style>
+        #Table {
+            font-size: 12px;
+        }
+
+        #Rubrik {
+            font-size: 13px;
+            font-style: initial;
+        }
+    </style>
+
+    <table id="Table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <!--ANSKAFFNINGAR & FÖRSÄLJNING/UTRANGERING-->
+            <tr>
+                <th id="Rubrik" colspan="4">Beskrivning</th>
+                <th id="Rubrik" colspan="7">Periodisering</th>
+            </tr>
+            <tr>
+                <th width="6%">Faktura</th>
+                <th width="6%">Konto</th>
+                <th width="22%">Leverantör</th>
+                <th width="12%">Fakturabelopp</th>
+                <th width="6%">Motkonto</th>
+                <th width="4%">Ks</th>
+                <th width="4%">Pr</th>
+                <th width="8%">Fr.o.m.</th>
+                <th width="8%">T.o.m.</th>
+                <th width="12%">Belopp/mån</th>
+                <th width="12%">Restbelopp</th>
+            </tr>
+            @for (var i = 0; i < 6; i++)
+            {
+            <tr>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="left" contenteditable="true"></td>
+                <td align="right" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="center" contenteditable="true"></td>
+                <td align="right" contenteditable="false"></td>
+                <td align="right" contenteditable="false"></td>
+            </tr>
+            }
+            <tr>
+                <td colspan="3" align="left"><strong>Summa</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="5" align="left"><strong></strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+                <td colspan="1" align="right"><strong>@ViewBag.testsum</strong></td>
+            </tr>
+    </table>
+    <table id="Table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+    </table>
