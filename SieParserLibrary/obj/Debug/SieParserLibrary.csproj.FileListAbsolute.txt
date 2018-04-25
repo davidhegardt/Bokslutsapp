@@ -1,0 +1,5 @@
+C:\Users\Dave\Source\Repos\SieParserLibrary\SieParserLibrary\bin\Debug\SieParserLibrary.dll
+C:\Users\Dave\Source\Repos\SieParserLibrary\SieParserLibrary\bin\Debug\SieParserLibrary.pdb
+C:\Users\Dave\Source\Repos\SieParserLibrary\SieParserLibrary\obj\Debug\SieParserLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Dave\Source\Repos\SieParserLibrary\SieParserLibrary\obj\Debug\SieParserLibrary.dll
+C:\Users\Dave\Source\Repos\SieParserLibrary\SieParserLibrary\obj\Debug\SieParserLibrary.pdb
