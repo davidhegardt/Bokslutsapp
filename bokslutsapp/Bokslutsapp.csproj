@@ -212,6 +212,7 @@
     <Content Include="Views\Bilaga\EgetKapital.cshtml" />
     <Content Include="Views\Bilaga\Kassa.cshtml" />
     <Content Include="Views\Bilaga\UnderbilagaSkatt.cshtml" />
+    <Content Include="Views\Home\Huvudbok.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
