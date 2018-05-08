@@ -26,7 +26,7 @@ namespace Bokslutsapp.Controllers
         {
             SieManager manager = new SieManager();
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            string path = root + "/Assets/test.se";
+            string path = root + "/Assets/test.se";            
            // List<Konto> kontoLista = manager.getKontoList(path);
             int currId = 0;
             List<_1930Bank> bankLista = new List<_1930Bank>();
