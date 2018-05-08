@@ -14,5 +14,8 @@ namespace Bokslutsapp.Models
         public int Ks { get; set; }
         public int Pr { get; set; }
         public float Belopp { get; set; }
+        public int VerifikationNr { get; set; }
+        public string Serie { get; set; }
+        public DateTime Datum { get; set; }
     }
 }

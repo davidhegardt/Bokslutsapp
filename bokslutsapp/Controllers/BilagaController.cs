@@ -27,10 +27,10 @@ namespace Bokslutsapp.Controllers
             SieManager manager = new SieManager();
             var root = AppDomain.CurrentDomain.BaseDirectory;
             string path = root + "/Assets/test.se";            
-           // List<Konto> kontoLista = manager.getKontoList(path);
+            List<Konto> kontoLista = manager.getKontoList(path);
             int currId = 0;
             List<_1930Bank> bankLista = new List<_1930Bank>();
-            /*
+            
             foreach (Konto k in kontoLista)
             {
                 currId++;
@@ -43,7 +43,7 @@ namespace Bokslutsapp.Controllers
                 newBank.Pr = 1;
                 bankLista.Add(newBank);
             }
-            */
+            
             return bankLista;
             /*
             return new List<_1930Bank> {
