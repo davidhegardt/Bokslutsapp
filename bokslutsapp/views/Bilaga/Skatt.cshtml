@@ -30,8 +30,38 @@
 </body>
 </html>
 
+<style>
+    .table {
+        border-collapse: collapse;
+        border-spacing: 0px;
+    }
+
+    .table tr {
+        margin-bottom: 0;
+        overflow: hidden;
+        height: 25px;
+        width: 100%;
+        padding: 0;
+    }
+
+     .table tr td {
+        border: 1px solid #000;
+    }
+
+     .table input {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: right;
+    }
+
+    .black {
+        background: #000;
+    }
+</style>
+
 <!--BILAGA-->
-<table id="skattespec" class="table table-striped table-bordered" style="width:100%">
+<table id="tabell_beräkning_av_årets_skatt" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
             <!--BERÄKNING AV ÅRETS SKATT-->
@@ -40,47 +70,47 @@
             <th width="15%">Belopp</th>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Resultat före skatt</td>
-            <td align="center" contenteditable='false'></td>
-            <td align="right" contenteditable='false' id="resfsk">5000</td>
+            <td align="left">Resultat före skatt</td>
+            <td align="center"></td>
+            <td align="right" id="resfsk"><input type="text" class="beräknSkattekostn" value="50 000" readonly="readonly"/></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Ej avdragsgilla kostnader enligt bilaga</td>
-            <td align="center" contenteditable='false'>+</td>
-            <td align="right" contenteditable='true' id="ejavdr"></td>
+            <td align="left">Ej avdragsgilla kostnader enligt bilaga</td>
+            <td align="center" class="tecken">+</td>
+            <td align="right" id="ejavdr"><input type="text" class="beräknSkattekostn" onchange="value=talformat(this.value)"/></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Ej skattepliktiga intäkter enligt bilaga</td>
-            <td align="center" contenteditable='false'>-</td>
-            <td align="right" contenteditable='true' id="ejskpl"></td>
+            <td align="left">Ej skattepliktiga intäkter enligt bilaga</td>
+            <td align="center" class="tecken">-</td>
+            <td align="right" id="ejskpl"><input type="text" class="beräknSkattekostn" onchange="value=talformat(this.value)"/></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Skattemässiga justeringar enligt bilaga</td>
-            <td align="center" contenteditable='false'>+/-</td>
-            <td align="right" contenteditable='true' id="skjust"></td>
+            <td align="left">Skattemässiga justeringar enligt bilaga</td>
+            <td align="center" class="tecken">+/-</td>
+            <td align="right" id="skjust"><input type="text" class="beräknSkattekostn" onchange="value=talformat(this.value)"/></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Schablonintäkt periodiseringsfond</td>
-            <td align="center" contenteditable='false'>+</td>
-            <td align="right" contenteditable='true' id="pfond"></td>
+            <td align="left">Schablonintäkt periodiseringsfond</td>
+            <td align="center" class="tecken">+</td>
+            <td align="right" id="pfond"><input type="text" class="beräknSkattekostn" onchange="value=talformat(this.value)"/></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Underskottsavdrag från tidigare år som utnyttjas detta år</td>
-            <td align="center" contenteditable='false'>-</td>
-            <td align="right" contenteditable='true' id="undavd"></td>
+            <td align="left">Underskottsavdrag från tidigare år som utnyttjas detta år</td>
+            <td align="center" class="tecken">-</td>
+            <td align="right" id="undavd"><input type="text" class="beräknSkattekostn" onchange="value=talformat(this.value)" /></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'><strong>Beräknat skattemässigt resultat</strong></td>
-            <td align="center" contenteditable='false'><strong>=</strong></td>
-            <td align="right" contenteditable='false' id="berskattres"><stong></stong></td>
+            <td align="left"><strong>Beräknat skattemässigt resultat</strong></td>
+            <td align="center"><strong>=</strong></td>
+            <td align="right"><strong><input id="berSkattRes" type="text" readonly="readonly"/></strong></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'><strong>Skatt för årets resultat</strong></td>
-            <td align="center" contenteditable='false' id="skattesats"><strong>@ViewBag.testskatt</strong></td>
-            <td align="right" contenteditable='false' id="skfres"><stong></stong></td>
+            <td align="left"><strong>Skatt för årets resultat</strong></td>
+            <td align="center" id="skattesats"><strong>@ViewBag.testskatt</strong></td>
+            <td align="right"><strong><input id="skfres" type="text" readonly="readonly"/></strong></td>
         </tr>
 </table>
-<table id="example" class="table table-striped table-bordered" style="width:100%">
+<table id="tabell_underskottsavdrag" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
             <!--UNDERSKOTTSAVDRAG-->
@@ -89,24 +119,24 @@
             <th width="15%"></th>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Underskottsavdrag enligt föregående års beskattning</td>
-            <td align="center" contenteditable='false'>+</td>
-            <td align="right" contenteditable='true'></td>
+            <td align="left">Underskottsavdrag enligt föregående års beskattning</td>
+            <td align="center">+</td>
+            <td align="right"><input type="text" class="berUnderskott"/></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Underskottsavdrag som utnyttjas detta år</td>
-            <td align="center" contenteditable='false'>-</td>
-            <td align="right" contenteditable='false'></td>
+            <td align="left">Underskottsavdrag som utnyttjas detta år</td>
+            <td align="center">-</td>
+            <td align="right"><input type="text" class="berUnderskott"/></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'>Årets skattemässiga underskott</td>
-            <td align="center" contenteditable='false'>+</td>
-            <td align="right" contenteditable='true'></td>
+            <td align="left">Årets skattemässiga underskott</td>
+            <td align="center">+</td>
+            <td align="right" id="åretsSkUndersk"><input type="text" class="berUnderskott" /></td>
         </tr>
         <tr>
-            <td align="left" contenteditable='false'><strong>Underskottsavdrag som sparas tills nästa år</strong></td>
-            <td align="center" contenteditable='false'><strong>=</strong></td>
-            <td align="right" contenteditable='false'><stong></stong></td>
+            <td align="left"><strong>Underskottsavdrag som sparas tills nästa år</strong></td>
+            <td align="center"><strong>=</strong></td>
+            <td align="right" id="sparatUndersk"></td>
         </tr>
 </table>
 <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -134,7 +164,7 @@
             <td colspan="3" width="20%" align="center" contenteditable='true'></td>
             <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
             <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
-            <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            <td colspan="3" width="15%" align="right" contenteditable='false' id="prel1"></td>
         </tr>
         <tr>
             <td colspan="2" width="20%" align="center" contenteditable='true'></td>
@@ -143,7 +173,7 @@
             <td colspan="3" width="20%" align="center" contenteditable='true'></td>
             <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
             <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
-            <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            <td colspan="3" width="15%" align="right" contenteditable='false' id="prel2"></td>
         </tr>
         <tr>
             <td colspan="2" width="20%" align="center" contenteditable='true'></td>
@@ -152,7 +182,7 @@
             <td colspan="3" width="20%" align="center" contenteditable='true'></td>
             <td colspan="1" width="10%" align="center" contenteditable='false'>Belopp</td>
             <td colspan="1" width="5%" align="center" contenteditable='false'>-</td>
-            <td colspan="3" width="15%" align="right" contenteditable='false'></td>
+            <td colspan="3" width="15%" align="right" contenteditable='false' id="prel3"></td>
         </tr>
         <tr>
             <td colspan="8" align="left" contenteditable='false'>Kompletteringsinbetald skatt (-) / återbetalad skatt (+) för föregående år</td>
@@ -309,22 +339,62 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#skattespec').keyup(function () {
-            var resfskatt = $('#resfsk').html();
-            var ejavdrg = $('#ejavdr').html();
-            var ejskattepl = $('#ejskpl').html();
-            var skattemjust = $('#skjust').html();
-            var schablpfond = $('#pfond').html();
-            var underskavdr = $('#undavd').html();
-            var berskattemres = resfskatt + ejavdrg - ejskattepl + skattemjust + schablpfond - underskavdr;
-            var skatt = berskattemres * $('#skattesats').html();
+        //iterate through each textboxes and add keyup
+        //handler to trigger sum event
 
-            $("#resfsk").html(resfskatt);
-            $("#ejavdr").html(ejavdrg);
-            $("#ejskpl").html(ejskattepl);
+        $('td').each(function () { //Beräkning av årets skattekostnad
+            $(this).keyup(function () {
+                calculateSum('.beräknSkattekostn');
+            });
+        });
+        $('td').each(function () { //Beräkning av årets underskottsavdrag
+            $(this).keyup(function () {
+                calculateSum('.beräknSkattekostn');
+            });
+        });
+    }); 
 
-            $("#berskattres").html(berskattemres);
-            $("#skfres").html(skatt);
+    function talformat(belopp) { //Funktion för att formattera tusentalsseparation
+        return (parseFloat(belopp).toLocaleString("se-SE", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }));
+    }
+
+    function beräkningsformat(belopp) { //Funktion för att omvandla talrepresentationen till float
+        return belopp.replace(/\s+/g, '');
+    }
+
+    function calculateSum(BerBlock) {
+        var sum = 0;
+        //iterate through each textboxes and add the values
+        $(BerBlock).each(function () {
+            var cellvärde = beräkningsformat(this.value);
+
+            //add only if the value is number
+            if (!isNaN(cellvärde) && cellvärde.length != 0) {
+                sum += parseFloat(cellvärde);
+                // $(this).css("background-color", "#FEFFB0");
+            }
+            else if (cellvärde.length != 0) {
+                // $(this).css("background-color", "red");
+            }    
+        });
+ 
+        if (BerBlock == '.beräknSkattekostn') { //Beräkningsblock 1: Beräkning av årets skattekostnad
+            $('#berSkattRes').val(sum.toLocaleString("se")); //Beräknat skattemässigt resultat
+
+            var skatt = parseFloat($('#skattesats strong').html()) / 100 * sum; //Beräknad skatt
+            if (skatt > 0) {
+                $("#skfres").val(talformat(skatt));
+            }
+            else {
+                $("#skfres").val(0);
+            }
         }
-    )});
+
+        if (BerBlock == '.berUnderskott') { //Beräkningsblock 2: Beräkning av underskottsavdrag
+            $('#sparatUndersk').val(sum);
+        }
+    }
 </script>

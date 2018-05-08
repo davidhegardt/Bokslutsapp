@@ -14,6 +14,51 @@
     ViewBag.testver = "1";
 }
 
+<style>
+    .table input {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: right;
+        background: transparent;
+    }
+    .table input[class="BFkonto"] {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent;
+    }
+    .table input[class="BFkontonamn"] {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: left;
+        background: transparent;
+    }
+    .table input[class="BFks"] {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent;
+    }
+    .table input[class="BFpr"] {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent;
+    }
+    .table input[class="BFrad"] {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: right;
+        background: transparent;
+    }
+</style>
+
 <!--KONTERINGSFÄLT-->
 <table id="kontering" class="table table-striped table-bordered">
     <thead>
@@ -32,24 +77,24 @@
             <th colspan="2" width="15%">Belopp</th>
         </tr>
     </thead>
-    <tbody>
-        @for (var i = 0; i < 4; i++)
-        {
-            <tr>
-                <td colspan="2" align="left" contenteditable='true'></td>
-                <td colspan="6" align="left" contenteditable='true'></td>
-                <td colspan="1" align="center" contenteditable='true'></td>
-                <td colspan="1" align="center" contenteditable='true'></td>
-                <td class="BFrad" align="right" contenteditable='true'></td>
-            </tr>
-        }
+    <tbody id="konteringsrader">
+        <tr class="mall">
+            <td colspan="2"><input type="text" class="BFkonto" onchange="kontoValidering(this.value)" /></td>
+            <td colspan="6"><input type="text" class="BFkontonamn"/></td>
+            <td colspan="1"><input type="text" class="BFks" /></td>
+            <td colspan="1"><input type="text" class="BFpr" /></td>
+            <td colspan="2"><input type="text" class="BFrad" onchange="value=Talformat(this.value)" /></td>
+        </tr>
     </tbody>
     <tr>
         <td colspan="10" align="right" contenteditable='false'><strong>Diff</strong></td>
-        <td id="BFdiff" colspan="2" align="right" contenteditable='false'><strong>@ViewBag.testdiff</strong></td>
+        <td colspan="2"><strong><input id="BFdiff" type="text" readonly="readonly" /></strong></td>
     </tr>
 
 </table>
+
+<div id="Meddelande"></div>
+
 <p align="right">
     <a href="#" class="btn btn-success btn-lg">
         <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Radera bokföringsorder"></span>
@@ -65,34 +110,91 @@
     </a>
 </p>
 
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js">
 </script>
 <script>
     $(document).ready(function () {
         //iterate through each textboxes and add keyup
         //handler to trigger sum event
+        konteringsrader_init();
+
         $('.BFrad').each(function () {
             $(this).keyup(function () {
-                calcSum();
+                calcSum(".BFrad");
             });
         });
+
     });
-    function calcSum() {
+
+    var test = "Test";
+
+    function Talformat(belopp) { //Funktion för att formattera tusentalsseparation
+        return (parseFloat(belopp).toLocaleString("se", { minimumFractionDigits: 2, maximumFractionDigits: 3 }));
+    }
+
+    function Beräkningsformat(belopp) { //Funktion för att omvandla talrepresentationen till float
+        var temp = belopp.replace(",", ".");
+        return temp.replace(/\s+/g, '');
+    } 
+
+    function kontoValidering(konto) {
+        if (!isNaN(konto) && konto.length == 4) {
+            addKonteringsrad()
+            return konto;
+        }
+        else {
+            $('#Meddelande').html('<div class="alert alert-danger"><strong>Fel:</strong> Felaktigt konto!</div>');
+        }
+    }
+
+    function konteringsrader_init() {
+        for (var i = 0; i < 3; i++) {
+            addKonteringsrad()
+        }
+    }
+
+    function addKonteringsrad() {
+        var klon = $('.mall:last').clone();
+        klon.find('input[type=text]').val(null);
+        $('#konteringsrader').append(klon);  
+        calcSum(".BFrad");
+    }
+
+    function calcSum(kontsum) {
         var bfsum = 0;
         //iterate through each textboxes and add the values
-        $(".BFrad").each(function () {
+        $(kontsum).each(function () {
+            var cellvärde = Beräkningsformat(this.value);
+            
             //add only if the value is number
-            if (!isNaN(this.textContent) && this.textContent.length != 0) {
-                bfsum += parseFloat(this.textContent);
+            if (!isNaN(cellvärde) && cellvärde.length != 0) {
+                bfsum += parseFloat(cellvärde);
                 //$(this).css("background-color", "#FEFFB0");
             }
-            else if (this.textContent.length != 0) {
+            else if (cellvärde.length != 0) {
                 //$(this).css("background-color", "red");
             }
         });
-        $("#BFdiff").html(bfsum.toFixed(2));
+        $("#BFdiff").val(bfsum.toLocaleString("se", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     }
+   
+    
+    /*
+    function calculateSum(BerBlock) {
+        var sum = 0;
+        //iterate through each textboxes and add the values
+        $(BerBlock).each(function () {
+            var cellvärde = beräkningsformat(this.value);
+
+            //add only if the value is number
+            if (!isNaN(cellvärde) && cellvärde.length != 0) {
+                sum += parseFloat(cellvärde);
+                // $(this).css("background-color", "#FEFFB0");
+            }
+            else if (cellvärde.length != 0) {
+                // $(this).css("background-color", "red");
+            }
+        });
+    */
 </script>
 

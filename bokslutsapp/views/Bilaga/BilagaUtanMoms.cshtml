@@ -117,21 +117,19 @@
                // $(this).css("background-color", "red");
             }
         });
-        $("#sum").html(sum.toFixed(2));
+        $("#sum").html('<strong>' + sum.toFixed(2) + '</strong>');
     }
 </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js">
-</script>
 <script>
     $(document).ready(function () {
         $('#spec').keyup(function () {
-            var totalsumma = $('#sum').html();
+            var totalsumma = $('#sum strong').html();
             var enlhuvudbok = 5.5;
             var differens = totalsumma - enlhuvudbok;
-            $("#totsum").html(totalsumma);
-            $("#saldohb").html(enlhuvudbok);
-            $("#diff").html(differens);
+            $("#totsum").html('<strong>' + totalsumma + '</strong>');
+            $("#saldohb").html('<strong>' + enlhuvudbok + '</strong>');
+            $("#diff").html('<strong>' + differens + '</strong>');
         }
     )});
 </script>
