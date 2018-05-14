@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Bokslutsapp.Models._1930Bank>
+
+@if (Model != null)
+{
+    @foreach(var Bilaga in Model)
+    {
+        <tr id="resultRows">
+            <td width="15%"><input type="text" name="huvudbok" class="KonteringKonto" value="@Bilaga.Konto" readonly="readonly" /></td>
+            <td width="8%"><input type="text" name="huvudbok" class="KonteringKs" value="@Bilaga.Ks" readonly="readonly" /></td>
+            <td width="8%"><input type="text" name="huvudbok" class="KonteringPr" value="@Bilaga.Pr" readonly="readonly" /></td>
+            <td width="24%"><input type="text" name="huvudbok" class="KonteringBeskr" value="@Bilaga.Beskrivning" readonly="readonly" /></td>
+            <td width="15%"><input type="text" name="huvudbok" class="KonteringVerNr" value="@Bilaga.Serie@Bilaga.VerifikationNr" readonly="readonly" /></td>
+            <td width="15%"><input type="text" name="huvudbok" class="KonteringDatum" value="@Bilaga.Datum.ToString("yyyy-MM-dd")" readonly="readonly" /></td>
+            <td width="15%"><input type="text" name="huvudbok" class="KonteringBelopp" value="@Bilaga.Belopp" readonly="readonly" /></td>
+        </tr>
+    }
+}

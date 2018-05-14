@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bokslutsapp.Models._1930Bank>
+﻿@model IEnumerable< Bokslutsapp.Models._1930Bank>
 
 @{
     ViewBag.Bilaga = "1";
@@ -86,6 +86,10 @@
         background-color: #f1f1f1;
     }
 
+    .searchField {
+        width: 90px;
+    }
+
     .top-container {
         background-color: #f1f1f1;
         padding: 10px;
@@ -121,8 +125,19 @@
 </div>
 
 <div class="header" id="myHeader" >
+  <!--  <input type="text" id="SearchInput" /> -->
     <table id="HBtableHeader">
             <!--KONTON-->
+
+@using (Html.BeginForm("Huvudbok", "Home", FormMethod.Get))
+{
+    
+    @Html.TextBox("name")
+   // <input type="submit" value="Search" />
+    <a href="~/Home/Huvudbok" class="btn btn-lg">
+        <span class="glyphicon glyphicon-remove" data-toggle="tooltip" title="Visa allt"></span>
+    </a>
+
             <tr>
                 <th id="labelKonto" width="15%">Konto</th>
                 <th id="labelKs"    width="8%">Ks</th>
@@ -132,21 +147,14 @@
                 <th id="labelDatum" width="15%">Datum</th>
                 <th id="labelBelopp" width="15%">Belopp</th>
             </tr>
-            <tr>
-                <th><input type="text" name="searchHB" id="searchKonto" onkeyup="searchHB('searchKonto',(this.value))" /></th>
-                <th><input type="text" name="searchHB" id="searchKs" /></th>
-                <th><input type="text" name="searchHB" id="searchPr" /></th>
-                <th><input type="text" name="searchHB" id="searchBesk" /></th>
-                <th><input type="text" name="searchHB" id="searchVerNr" /></th>
-                <th><input type="text" name="searchHB" id="searchDatum" /></th>
-                <th><input type="text" name="searchHB" id="searchBelopp" /></th>
-            </tr>
+
+}
      </table>
 </div>
 
 <table class="table table-hover" id="HBtableRows">
-    <tbody>
-        @foreach (var Bilaga in Model)
+    <tbody id="bilagaRow">
+        @foreach (var Bilaga in ViewBag.AccountList)
         {
             <tr id="resultRows">
                 <td width="15%"><input type="text" name="huvudbok" class="KonteringKonto" value="@Bilaga.Konto" readonly="readonly" /></td>
@@ -185,6 +193,43 @@
                 header.classList.remove("sticky");
             }
         }
+        
+        $("#SearchInput").keydown(function () {
+            var searchString = $(this).val();
+
+            $.ajax({
+
+                type: "Post",
+                url: "/Home/Huvudbok/GetSearchRecord?SearchText=" + searchString,
+                contentType: "html",
+                success: function (response) {
+                    
+                    
+                }
+            })
+        });
+        
+        /*
+        $("#Konto").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/Huvudbok/Index",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Konto, value: item.Konto };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+        */
 
  
         function sortHBdata() {
