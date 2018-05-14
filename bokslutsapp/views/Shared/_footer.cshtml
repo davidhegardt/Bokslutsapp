@@ -79,15 +79,15 @@
     </thead>
     <tbody id="konteringsrader">
         <tr class="mall">
-            <td colspan="2"><input type="text" class="BFkonto" onchange="kontoValidering(this.value)" /></td>
+            <td colspan="2"><input type="text" class="BFkonto" maxlength="4" onchange="konteringsraderKontroll('#konteringsrader',4),kontoValidering(this.value)" /></td>
             <td colspan="6"><input type="text" class="BFkontonamn" size="1000"/></td>
             <td colspan="1"><input type="text" class="BFks" /></td>
             <td colspan="1"><input type="text" class="BFpr" /></td>
-            <td colspan="2"><input type="text" class="BFrad" onchange="value=talformat_2dec(this.value)" /></td>
+            <td colspan="2"><input type="text" class="BFrad" onchange="value = talformat_2dec(this.value), kontoSum()" /></td>
         </tr>
     </tbody>
     <tr>
-        <td colspan="10" align="right" contenteditable='false'><strong>Diff</strong></td>
+        <td colspan="10" align="right"><strong>Diff</strong></td>
         <td colspan="2"><strong><input id="BFdiff" type="text" readonly="readonly" /></strong></td>
     </tr>
 
@@ -116,29 +116,52 @@
     $(document).ready(function () {
         //iterate through each textboxes and add keyup
         //handler to trigger sum event
-        konteringsrader_init();
-
-        $('.BFrad').each(function () {
-            $(this).keyup(function () {
-                var temp = calcSum(".BFrad");
-                $("#BFdiff").val(talformat_2dec(temp));
-            });
-        });
+        konteringsrader_init('#konteringsrader', 4);
+        kontoSum();
+        
 
     });
-    
-    function konteringsrader_init() { //Funktion som vid initieringen lägger till 4 rader.
-        for (var i = 0; i < 3; i++) {
-            addKonteringsrad()
+
+
+    function kontoSum() {
+        $('.BFrad').each(function () {
+            $(this).keyup(function () {
+                $("#BFdiff").val(talformat_2dec(calcSum(".BFrad")));
+            });
+        });
+    }
+
+    function konteringsraderKontroll(mall, radAntStart) {
+        if ($(mall).find('tr:last input').val() != "") {
+            addKonteringsrad(mall);
+        }
+        else if ($(mall).find('tr:last input').val() == "") {
+            removeKonteringsrad(mall, radAntStart);
         }
     }
 
-    function addKonteringsrad() { //Funktion för att skapa nya konteringsrader
-        var klon = $('.mall:last').clone();
-        klon.find('input[type=text]').val(null);
-        $('#konteringsrader').append(klon);  
-        calcSum(".BFrad");
+    function konteringsrader_init(mall, radAntStart) { //Funktion som vid initieringen lägger till 4 rader.
+        for (var i = 0; i < (radAntStart - 1); i++) {
+            addKonteringsrad(mall);
+        }
     }
-  
+
+    function addKonteringsrad(mall) { //Funktion för att skapa nya konteringsrader
+        var klon = $(mall).find('tr:last').clone();
+        //var klon = $('.mall1:last').clone();
+        klon.find('input[type=text]').val(null);
+        $(mall).append(klon);
+        $("#BFdiff").val(calcSum(".BFrad"));
+    }
+
+    function removeKonteringsrad(mall, radAntStart) {
+        lastRad = $(mall).find('tr');
+        if (lastRad.length > radAntStart) {
+            // if (this.each() != "") {
+            $(mall).find('tr:last').remove(); 
+            $("#BFdiff").val(calcSum(".BFrad"));
+            // }
+        }
+    } 
 </script>
 
