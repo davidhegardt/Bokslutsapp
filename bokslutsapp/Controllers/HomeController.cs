@@ -34,12 +34,67 @@ namespace Bokslutsapp.Controllers
             var Bilagor = GetBilagor();
             return View(Bilagor);
         }
-
-        public ActionResult Huvudbok()
+        
+        public ActionResult Huvudbok(string name, string email)
         {
             var Bilagor = GetBilagor();
+            if (!String.IsNullOrEmpty(name))
+            {
+                int nummer;
+                DateTime tryTime;
+                if(Int32.TryParse(name, out nummer))
+                {
+                    Bilagor = Bilagor.Where(s => s.Konto == nummer);
+                } else if(DateTime.TryParse(name,out tryTime))
+                {
+                    Bilagor = Bilagor.Where(d => d.Datum.Equals(tryTime));
+                }
+                else
+                {
+                        Bilagor = Bilagor.Where(n => n.Beskrivning.Contains(name));
+                 }
+
+                    
+            }
+
+            ViewBag.AccountList = Bilagor;
+
             return View(Bilagor);
         }
+
+        [HttpPost]
+        public JsonResult Index(string Prefix)
+        {
+            var Bilagor = GetBilagor();
+            int nummer = Int32.Parse(Prefix);
+            var resultList = Bilagor.Where(s => s.Konto == nummer);
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetSearchRecord(string SearchText)
+        {
+            var Bilagor = GetBilagor();
+            if (!String.IsNullOrEmpty(SearchText))
+            {
+                int nummer = Int32.Parse(SearchText);
+                Bilagor = Bilagor.Where(s => s.Konto == nummer);
+            }
+
+            ViewBag.AccountList = Bilagor;
+
+            return View(Bilagor);
+            //return Bilagor;
+            //return PartialView("SearchPartial", Bilagor);
+        }
+
+        /*
+        public ActionResult Huvudbok()
+        {
+
+        }
+        */
 
         private IEnumerable<_1930Bank> GetBilagor()
         {
