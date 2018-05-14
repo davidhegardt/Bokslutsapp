@@ -53,6 +53,8 @@ namespace Bokslutsapp.Controllers
             new _1930Bank { Id = 4, Beskrivning = "Placeringskonto Avanza", Konto = 1933, Ks = 1, Pr = 1, Belopp = 84380.23f }
             };
             */
+
+            // comment
         }
 
         public ActionResult Skatt()
