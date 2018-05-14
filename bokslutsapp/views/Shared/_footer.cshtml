@@ -80,10 +80,10 @@
     <tbody id="konteringsrader">
         <tr class="mall">
             <td colspan="2"><input type="text" class="BFkonto" onchange="kontoValidering(this.value)" /></td>
-            <td colspan="6"><input type="text" class="BFkontonamn"/></td>
+            <td colspan="6"><input type="text" class="BFkontonamn" size="1000"/></td>
             <td colspan="1"><input type="text" class="BFks" /></td>
             <td colspan="1"><input type="text" class="BFpr" /></td>
-            <td colspan="2"><input type="text" class="BFrad" onchange="value=Talformat(this.value)" /></td>
+            <td colspan="2"><input type="text" class="BFrad" onchange="value=talformat_2dec(this.value)" /></td>
         </tr>
     </tbody>
     <tr>
@@ -110,8 +110,8 @@
     </a>
 </p>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js">
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script src="~/Scripts/generella.funktioner.js"></script>
 <script>
     $(document).ready(function () {
         //iterate through each textboxes and add keyup
@@ -120,81 +120,25 @@
 
         $('.BFrad').each(function () {
             $(this).keyup(function () {
-                calcSum(".BFrad");
+                var temp = calcSum(".BFrad");
+                $("#BFdiff").val(talformat_2dec(temp));
             });
         });
 
     });
-
-    var test = "Test";
-
-    function Talformat(belopp) { //Funktion för att formattera tusentalsseparation
-        return (parseFloat(belopp).toLocaleString("se", { minimumFractionDigits: 2, maximumFractionDigits: 3 }));
-    }
-
-    function Beräkningsformat(belopp) { //Funktion för att omvandla talrepresentationen till float
-        var temp = belopp.replace(",", ".");
-        return temp.replace(/\s+/g, '');
-    } 
-
-    function kontoValidering(konto) {
-        if (!isNaN(konto) && konto.length == 4) {
-            addKonteringsrad()
-            return konto;
-        }
-        else {
-            $('#Meddelande').html('<div class="alert alert-danger"><strong>Fel:</strong> Felaktigt konto!</div>');
-        }
-    }
-
-    function konteringsrader_init() {
+    
+    function konteringsrader_init() { //Funktion som vid initieringen lägger till 4 rader.
         for (var i = 0; i < 3; i++) {
             addKonteringsrad()
         }
     }
 
-    function addKonteringsrad() {
+    function addKonteringsrad() { //Funktion för att skapa nya konteringsrader
         var klon = $('.mall:last').clone();
         klon.find('input[type=text]').val(null);
         $('#konteringsrader').append(klon);  
         calcSum(".BFrad");
     }
-
-    function calcSum(kontsum) {
-        var bfsum = 0;
-        //iterate through each textboxes and add the values
-        $(kontsum).each(function () {
-            var cellvärde = Beräkningsformat(this.value);
-            
-            //add only if the value is number
-            if (!isNaN(cellvärde) && cellvärde.length != 0) {
-                bfsum += parseFloat(cellvärde);
-                //$(this).css("background-color", "#FEFFB0");
-            }
-            else if (cellvärde.length != 0) {
-                //$(this).css("background-color", "red");
-            }
-        });
-        $("#BFdiff").val(bfsum.toLocaleString("se", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-    }
-   
-    
-    /*
-    function calculateSum(BerBlock) {
-        var sum = 0;
-        //iterate through each textboxes and add the values
-        $(BerBlock).each(function () {
-            var cellvärde = beräkningsformat(this.value);
-
-            //add only if the value is number
-            if (!isNaN(cellvärde) && cellvärde.length != 0) {
-                sum += parseFloat(cellvärde);
-                // $(this).css("background-color", "#FEFFB0");
-            }
-            else if (cellvärde.length != 0) {
-                // $(this).css("background-color", "red");
-            }
-        });
-    */
+  
 </script>
 

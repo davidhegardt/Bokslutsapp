@@ -273,3 +273,4 @@ C:\Users\Dave\Source\Repos\Bokslutsapp\Bokslutsapp\obj\Debug\Bokslutsapp.csproj.
 C:\Users\Dave\Source\Repos\Bokslutsapp\Bokslutsapp\obj\Debug\Bokslutsapp.dll
 C:\Users\Dave\Source\Repos\Bokslutsapp\Bokslutsapp\obj\Debug\Bokslutsapp.pdb
 C:\Users\Dave\Source\Repos\Bokslutsapp\Bokslutsapp\bin\Assets\test.se
+C:\Users\Magnus Järvelid\Source\Repos\Bokslutsapp\Bokslutsapp\bin\Assets\test.se

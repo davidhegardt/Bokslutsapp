@@ -41,50 +41,28 @@
             <th width="14%" contenteditable='true'>Belopp</th>
             <th width="14%">Belopp</th>
         </tr>
-        @for (var i = 0; i < 10; i++)
-        {
-            <tr>
-                <td width="52%" align="left" contenteditable='true'></td>
-                <td width="5%" align="center" contenteditable='true'></td>
-                <td width="10%" align="center" contenteditable='true'></td>
-                <td width="14%" align="right" contenteditable='true'></td>
-                <td class="rad" width="14%" align="right" contenteditable='true'></td>
-            </tr>
-        }
-        <tr>
-            <th colspan="4"><strong>Summa</strong></th>
-            <td id="sum" align="right"><strong></strong></td>
-        </tr>
     </thead>
+        <tbody id="raderBilagaUtanMoms">
+            <tr class="mall1">
+                <td><input type="text" onchange="raderKontroll('#raderBilagaUtanMoms',10)" /></td>
+                <td><input type="text" /></td>
+                <td><input type="text" maxlength="4" onchange="kontoValidering(this.value)"/></td>
+                <td><input type="text" /></td>
+                <td><input type="text" class="beräknKonto" onchange="value=talformat_2dec(this.value)" /></td>
+            </tr>  
+        </tbody>    
+        <tr>
+            <td colspan="4"><strong>Summa</strong></td>
+            <td><strong><input id="summaBilagaUtanMoms" class="delsummaSpec" type="text" readonly="readonly" /></strong></td>
+        </tr>
 </table>
 
 
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-    <!--Summarad-->
-    <thead>
-        <tr>
-            <th width="86%"><strong>Totalsumma enligt bilagan</strong></th>
-            <td id="totsum" width="14%" align="right"><strong>@ViewBag.testdiff</strong></td>
-        </tr>
-        <tr>
-            <th width="86%"><strong>Saldo enligt huvudbok</strong></th>
-            <td id="saldohb" width="14%" align="right"><strong>@ViewBag.testdiff</strong></td>
-        </tr>
-        <tr>
-            <th width="86%"><strong>Belopp kvar att specificera</strong></th>
-            <td id="diff" width="14%" align="right"><strong>@ViewBag.testdiff</strong></td>
-        </tr>
-    </thead>
-</table>
+<!--Summering av bilaga-->
+<div class="content-wrapper">
+    @Html.Partial("_bilagasummering")
+</div>
 
-<p align="right">
-    <a href="#" class="btn btn-success btn-lg">
-        <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Töm bilaga"></span>
-    </a>
-    <a href="#" class="btn btn-success btn-lg">
-        <span class="glyphicon glyphicon-ok" data-toggle="tooltip" title="Klarmarkera bilaga"></span>
-    </a>
-</p>
 
 <!--Konteringsvy-->
 <div class="content-wrapper">
@@ -98,38 +76,50 @@
     $(document).ready(function () {
         //iterate through each textboxes and add keyup
         //handler to trigger sum event
-        $('.rad').each(function () {
+        var mall = '#raderBilagaUtanMoms';
+        rader_init(mall,10);
+
+        $('td').each(function () {
             $(this).keyup(function () {
-                calculateSum();
+                $('#summaBilagaUtanMoms').val(talformat_2dec(calcSum('.beräknKonto')));
             });
         });
     });
-    function calculateSum() {
-        var sum = 0;
-        //iterate through each textboxes and add the values
-        $(".rad").each(function () {
-            //add only if the value is number
-            if (!isNaN(this.textContent) && this.textContent.length != 0) {
-                sum += parseFloat(this.textContent);
-               // $(this).css("background-color", "#FEFFB0");
-            }
-            else if (this.textContent.length != 0) {
-               // $(this).css("background-color", "red");
-            }
-        });
-        $("#sum").html('<strong>' + sum.toFixed(2) + '</strong>');
+
+
+
+    function raderKontroll(mall, radAntStart) {
+        if ($(mall).find('tr:last input').val() != "") {
+            addRad(mall);
+        }   
+        else if ($(mall).find('tr:last input').val() == "") {
+            removeRad(mall, radAntStart);
+        } 
     }
+
+    function rader_init(mall,radAntStart) { //Funktion som vid initieringen lägger till 4 rader.
+        for (var i = 0; i < (radAntStart-1); i++) {
+            addRad(mall);
+        }
+    }
+
+    function addRad(mall) { //Funktion för att skapa nya konteringsrader
+        var klon = $(mall).find('tr:last').clone();
+        //var klon = $('.mall1:last').clone();
+        klon.find('input[type=text]').val(null);
+        return $(mall).append(klon);
+       // calcSum(".beräknKonto");
+    }
+
+    function removeRad(mall, radAntStart) {
+        lastRad = $(mall).find('tr');
+        if (lastRad.length > radAntStart) {
+           // if (this.each() != "") {
+                return $(mall).find('tr:last').remove();
+           // }
+        }
+    }  
+
 </script>
 
-<script>
-    $(document).ready(function () {
-        $('#spec').keyup(function () {
-            var totalsumma = $('#sum strong').html();
-            var enlhuvudbok = 5.5;
-            var differens = totalsumma - enlhuvudbok;
-            $("#totsum").html('<strong>' + totalsumma + '</strong>');
-            $("#saldohb").html('<strong>' + enlhuvudbok + '</strong>');
-            $("#diff").html('<strong>' + differens + '</strong>');
-        }
-    )});
-</script>
+

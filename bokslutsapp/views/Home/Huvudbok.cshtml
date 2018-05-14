@@ -14,67 +14,189 @@
     ViewBag.avskiljare = ", ";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
+@{
+    ViewBag.searchKonto = "";
+    ViewBag.searchBesk = "";
+    ViewBag.searchKs = "";
+    ViewBag.searchPr = "";
+    ViewBag.searchVerNr = "";
+    ViewBag.searchDatum = "";
+    ViewBag.searchBelopp = "";
+}
+
+<style>
+    .table input[class="KonteringKonto"], #searchKonto {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent white;
+    }
+
+    .table input[class="KonteringKs"], #searchKs {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent white;
+    }
+
+    .table input[class="KonteringPr"], #searchPr {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent white;
+    }
+
+    .table input[class="KonteringBeskr"], #searchBesk {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: left;
+        background: transparent white;
+    }
+
+    .table input[class="KonteringVerNr"], #searchVerNr {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent white;
+    }
+
+    .table input[class="KonteringDatum"], #searchDatum {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: center;
+        background: transparent white;
+    }
+
+    .table input[class="KonteringBelopp"], #searchBelopp, #labelBelopp {
+        width: 100%;
+        height: 25px;
+        border: none;
+        text-align: right;
+        background: transparent white;
+    }  
+    
+    .input {
+        width: 10px;
+        background-color: #f1f1f1;
+    }
+
+    .top-container {
+        background-color: #f1f1f1;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .header {
+        padding: 10px 16px;
+        background: #555;
+        color: #f1f1f1;
+        opacity: 0.8;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .sticky {
+        position: fixed;
+        top: 50px;
+        width: 90.3%;
+        opacity: 0.8;
+    }
+
+    .sticky + .content {
+        padding-top: 302px;
+    }
+</style>
 
 <!--BILAGA-->
-<table id="example" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <!--KONTON-->
-        <tr>
-            <th width="10%">Konto</th>
-            <th width="3%">KS</th>
-            <th width="3%">Pr</th>
-            <th width="45%">Benämning</th>
-            <th width="10%">Verifikation</th>
-            <th width="15%">Datum</th>
-            <th width="14%">Belopp</th>
-        </tr>
-        <tr>
-            <td align="left" contenteditable='true'>50*</td>
-            <td align="center" contenteditable='true'>123</td>
-            <td align="center" contenteditable='true'>456</td>
-            <td align="left" contenteditable='true'>*bank</td>
-            <td align="center" contenteditable='true'>A25*</td>
-            <td align="center" contenteditable='true'>20170101</td>
-            <td align="right" contenteditable='true'>50000</td>
-        </tr>
-        @foreach (var Bilaga in Model) 
-        {
+<div class="top-container">
+    <h1>Huvudbok</h1>
+</div>
+
+<div class="header" id="myHeader" >
+    <table id="HBtableHeader">
+            <!--KONTON-->
             <tr>
-                <td align="left" contenteditable='true'>@Bilaga.Konto</td>
-                <td align="center" contenteditable="true">@Bilaga.Ks</td>
-                <td align="center" contenteditable="true">@Bilaga.Pr</td>
-                <td align="left" contenteditable='true'>@Bilaga.Beskrivning</td>
-                <td align="center" contenteditable='true'>@Bilaga.Serie@Bilaga.VerifikationNr</td>
-                <td align="center" contenteditable='true'>@Bilaga.Datum.ToString("yyyy-MM-dd")</td>
-                <td align="right" contenteditable='true' >@Bilaga.Belopp</td>                
+                <th id="labelKonto" width="15%">Konto</th>
+                <th id="labelKs"    width="8%">KS</th>
+                <th id="labelPr"    width="8%">Pr</th>
+                <th id="labelBesk"  width="24%">Benämning</th>
+                <th id="labelVerNr" width="15%">Verifikation</th>
+                <th id="labelDatum" width="15%">Datum</th>
+                <th id="labelBelopp" width="15%">Belopp</th>
+            </tr>
+            <tr>
+                <th><input type="text" name="searchHB" id="searchKonto" onkeyup="searchHB('searchKonto',(this.value))" /></th>
+                <th><input type="text" name="searchHB" id="searchKs" /></th>
+                <th><input type="text" name="searchHB" id="searchPr" /></th>
+                <th><input type="text" name="searchHB" id="searchBesk" /></th>
+                <th><input type="text" name="searchHB" id="searchVerNr" /></th>
+                <th><input type="text" name="searchHB" id="searchDatum" /></th>
+                <th><input type="text" name="searchHB" id="searchBelopp" /></th>
+            </tr>
+     </table>
+</div>
+
+<table class="table table-hover" id="HBtableRows">
+    <tbody>
+        @foreach (var Bilaga in Model)
+        {
+            <tr id="resultRows">
+                <td width="15%"><input type="text" name="huvudbok" class="KonteringKonto" value="@Bilaga.Konto" readonly="readonly" /></td>
+                <td width="8%"><input type="text" name="huvudbok" class="KonteringKs" value="@Bilaga.Ks" readonly="readonly" /></td>
+                <td width="8%"><input type="text" name="huvudbok" class="KonteringPr" value="@Bilaga.Pr" readonly="readonly" /></td>
+                <td width="24%"><input type="text" name="huvudbok" class="KonteringBeskr" value="@Bilaga.Beskrivning" readonly="readonly" /></td>
+                <td width="15%"><input type="text" name="huvudbok" class="KonteringVerNr" value="@Bilaga.Serie@Bilaga.VerifikationNr" readonly="readonly" /></td>
+                <td width="15%"><input type="text" name="huvudbok" class="KonteringDatum" value="@Bilaga.Datum.ToString("yyyy-MM-dd")" readonly="readonly" /></td>
+                <td width="15%"><input type="text" name="huvudbok" class="KonteringBelopp" value="@Bilaga.Belopp" readonly="readonly" /></td>
             </tr>
         }
         <tr>
-            <th colspan="6"><strong>Summa</strong></th>
-            <td id="sum" align="right"><strong></strong></td>
+            <td colspan="6"><strong>Summa</strong></td>
+            <td colspan="1"><strong><input id="HBsum" type="text" readonly="readonly" /></strong></td>
         </tr>
-    </thead>
+    </tbody>
 </table>
-
 
 <!--Konteringsvy-->
 <div class="content-wrapper">
     @Html.Partial("_footer")
 </div>
-</html>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js">
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script src="~/Scripts/generella.funktioner.js"></script>
 <script>
     $(document).ready(function () {
+        window.onscroll = function () { frysRad("myHeader") };
+
+        function frysRad(frysElement) { //Funktion för att låsa rad
+            var header = document.getElementById(frysElement);
+            var sticky = header.offsetTop;
+            if (window.pageYOffset >= sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+
+
+        function sortHBdata() {
+        }
         
+        $('.KonteringBelopp').each(function () { //Talformattering
+            $(this).val(talformat_2dec(this.value))
+        });
+
+        $('#HBsum').val(talformat_2dec(calcSum('.KonteringBelopp'))); //Summering
+
     });
+
 </script>
 
