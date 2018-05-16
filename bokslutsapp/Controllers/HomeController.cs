@@ -35,26 +35,25 @@ namespace Bokslutsapp.Controllers
             return View(Bilagor);
         }
         
-        public ActionResult Huvudbok(string name, string email)
+        public ActionResult Huvudbok(string konto, string email)
         {
             var Bilagor = GetBilagor();
-            if (!String.IsNullOrEmpty(name))
+            if (!String.IsNullOrEmpty(konto))
             {
                 int nummer;
                 DateTime tryTime;
-                if(Int32.TryParse(name, out nummer))
+                if(Int32.TryParse(konto, out nummer))
                 {
                     Bilagor = Bilagor.Where(s => s.Konto == nummer);
-                } else if(DateTime.TryParse(name,out tryTime))
+                } else if(DateTime.TryParse(konto, out tryTime))
                 {
                     Bilagor = Bilagor.Where(d => d.Datum.Equals(tryTime));
                 }
                 else
                 {
-                        Bilagor = Bilagor.Where(n => n.Beskrivning.Contains(name));
+                        Bilagor = Bilagor.Where(n => n.Beskrivning.ToLower().Contains(konto.ToLower()));
                  }
-
-                    
+                 
             }
 
             ViewBag.AccountList = Bilagor;
@@ -67,26 +66,38 @@ namespace Bokslutsapp.Controllers
         {
             var Bilagor = GetBilagor();
             int nummer = Int32.Parse(Prefix);
-            var resultList = Bilagor.Where(s => s.Konto == nummer);
+            //var resultList = Bilagor.Where(s => s.Konto == nummer);            
+            var resultList = (from N in Bilagor where N.Konto.ToString().StartsWith(Prefix) select new { N.Konto });
 
             return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult GetSearchRecord(string SearchText)
+        public ActionResult GetSearchRecord(string name)
         {
             var Bilagor = GetBilagor();
-            if (!String.IsNullOrEmpty(SearchText))
+            if (!String.IsNullOrEmpty(name))
             {
-                int nummer = Int32.Parse(SearchText);
-                Bilagor = Bilagor.Where(s => s.Konto == nummer);
+                int nummer;
+                DateTime tryTime;
+                if (Int32.TryParse(name, out nummer))
+                {
+                    Bilagor = Bilagor.Where(s => s.Konto == nummer);
+                }
+                else if (DateTime.TryParse(name, out tryTime))
+                {
+                    Bilagor = Bilagor.Where(d => d.Datum.Equals(tryTime));
+                }
+                else
+                {
+                    Bilagor = Bilagor.Where(n => n.Beskrivning.ToLower().Contains(name.ToLower()));
+                }
+
             }
 
             ViewBag.AccountList = Bilagor;
 
             return View(Bilagor);
-            //return Bilagor;
-            //return PartialView("SearchPartial", Bilagor);
         }
 
         /*

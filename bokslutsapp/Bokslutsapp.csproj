@@ -156,6 +156,7 @@
     <Compile Include="Models\2510Skatt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Viewmodels\BilagaBilagorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -178,6 +179,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -185,6 +187,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\Home\Huvudbok.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -216,7 +219,6 @@
     <Content Include="Views\Bilaga\EgetKapital.cshtml" />
     <Content Include="Views\Bilaga\Kassa.cshtml" />
     <Content Include="Views\Bilaga\UnderbilagaSkatt.cshtml" />
-    <Content Include="Views\Home\Huvudbok.cshtml" />
     <Content Include="Views\Shared\_bilagasummering.cshtml" />
     <Content Include="Views\Shared\SearchPartial.cshtml" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bokslutsapp.Models._1930Bank>
+﻿@model IEnumerable< Bokslutsapp.Models._1930Bank>
 
 @{
     ViewBag.Bilaga = "1";
@@ -165,7 +165,7 @@
 
 <table class="table table-hover" id="HBtableRows">
     <tbody id="bilagaRow">
-        @foreach (var Bilaga in Model)
+        @foreach (var Bilaga in ViewBag.AccountList)
         {
             <tr id="resultRows">
                 <td width="15%"><input type="text" name="huvudbok" class="KonteringKonto" value="@Bilaga.Konto" readonly="readonly" /></td>
@@ -191,7 +191,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script src="~/Scripts/generella.funktioner.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
     $(document).ready(function () {
         window.onscroll = function () { frysRad("myHeader") };
@@ -221,9 +220,27 @@
             })
         });
         
-        
-        
-        
+        /*
+        $("#Konto").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/Huvudbok/Index",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Konto, value: item.Konto };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+        */
 
     //TEST 2018-05-14
         function sortHBdata() {
