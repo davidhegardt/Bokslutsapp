@@ -2,7 +2,7 @@
 function talformat_2dec(belopp) { //Funktion för att formattera tusentalsseparation till 2 decimaler
     return (parseFloat(belopp).toLocaleString("se-SE", {
         minimumFractionDigits: 2,
-        maximumFractionDigits: 3
+        maximumFractionDigits: 2
     }));
 }
 
@@ -18,8 +18,10 @@ function beräkningsformat(belopp) { //Funktion för att omvandla talrepresentat
 }
 
 function Beräkningsformat(belopp) { //Funktion för att omvandla talrepresentationen till float
-    var temp = belopp.replace(",", ".");
-    return temp.replace(/\s+/g, '');
+    //var temp1 = belopp.replace(/[\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u2043\uFE58\uFE63\uFE0D]/g, '\u2212');
+    var temp1 = belopp.replace(/\u2013|\u2014/g, "-");
+    var temp2 = temp1.replace(",", ".");
+    return temp2.replace(/\s+/g, '');
 }
 
 function kontoValidering(konto) { //Funktion för att validera att konton består av exakt 4 tecken
@@ -41,7 +43,13 @@ function calcSum(klassSumma) { //Funktion för summering av kolumner
 
         //add only if the value is number
         if (!isNaN(cellvärde) && cellvärde.length != 0) {
-            summa += parseFloat(cellvärde);
+            if (cellvärde[0] == '−') {
+                summa -= parseFloat(cellvärde);
+            }
+            else {
+                summa += parseFloat(cellvärde);
+            }
+    
             //$(this).css("background-color", "#FEFFB0");
         }
         else if (cellvärde.length != 0) {

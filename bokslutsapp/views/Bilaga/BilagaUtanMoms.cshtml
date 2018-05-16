@@ -48,7 +48,7 @@
                 <td><input type="text" /></td>
                 <td><input type="text" maxlength="4" onchange="kontoValidering(this.value)"/></td>
                 <td><input type="text" /></td>
-                <td><input type="text" class="beräknKonto" onchange="value=talformat_2dec(this.value)" /></td>
+                <td><input type="text" class="beräknKonto" onchange="value = talformat_2dec(this.value)" /></td>
             </tr>  
         </tbody>    
         <tr>
@@ -108,7 +108,7 @@
         //var klon = $('.mall1:last').clone();
         klon.find('input[type=text]').val(null);
         return $(mall).append(klon);
-       // calcSum(".beräknKonto");
+        Beräkningsformat(calcSum('.beräknKonto'));
     }
 
     function removeRad(mall, radAntStart) {
