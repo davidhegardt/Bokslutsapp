@@ -1,25 +1,31 @@
 ﻿
 function talformat_2dec(belopp) { //Funktion för att formattera tusentalsseparation till 2 decimaler
-    return (parseFloat(belopp).toLocaleString("se-SE", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 3
-    }));
+    var tal = parseFloat(belopp.toString().replace(",", ".")).toFixed(2).replace(".", ",");
+    return addSeparator(tal);
 }
 
 function talformat_0dec(belopp) { //Funktion för att formattera tusentalsseparation till 0 decimaler
-    return (parseFloat(belopp).toLocaleString("se-SE", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }));
+    var tal = parseFloat(belopp.toString().replace(",", ".")).toFixed(0).replace(".", ",");
+    return addSeparator(tal);
 }
 
-function beräkningsformat(belopp) { //Funktion för att omvandla talrepresentationen till float
-    return belopp.replace(/\s+/g, '');
+function addSeparator(nStr) { //Funktion för tusentalsavgränsning
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+    }
+    return x1 + x2;
 }
 
 function Beräkningsformat(belopp) { //Funktion för att omvandla talrepresentationen till float
-    var temp = belopp.replace(",", ".");
-    return temp.replace(/\s+/g, '');
+    //var temp1 = belopp.replace(/[\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\u2043\uFE58\uFE63\uFE0D]/g, '\u2212');
+    var temp1 = belopp.replace(/\u2013|\u2014/g, "-");
+    var temp2 = temp1.replace(",", ".");
+    return temp2.replace(/\s+/g, '');
 }
 
 function kontoValidering(konto) { //Funktion för att validera att konton består av exakt 4 tecken
@@ -38,10 +44,16 @@ function calcSum(klassSumma) { //Funktion för summering av kolumner
     //iterate through each textboxes and add the values
     $(klassSumma).each(function () {
         var cellvärde = Beräkningsformat(this.value);
-
+       
         //add only if the value is number
         if (!isNaN(cellvärde) && cellvärde.length != 0) {
-            summa += parseFloat(cellvärde);
+            if (cellvärde[0] == '−') {
+                summa -= parseFloat(cellvärde);
+            }
+            else {
+                summa += parseFloat(cellvärde);
+            }
+    
             //$(this).css("background-color", "#FEFFB0");
         }
         else if (cellvärde.length != 0) {

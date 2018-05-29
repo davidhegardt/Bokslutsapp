@@ -221,6 +221,7 @@
     <Content Include="Views\Bilaga\UnderbilagaSkatt.cshtml" />
     <Content Include="Views\Shared\_bilagasummering.cshtml" />
     <Content Include="Views\Shared\SearchPartial.cshtml" />
+    <Content Include="Views\Shared\_printOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

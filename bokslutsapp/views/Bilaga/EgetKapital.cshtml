@@ -13,7 +13,7 @@
     ViewBag.testdiff = "0";
     ViewBag.avskiljare = ", ";
 
-    string[] Rubrik = {"Ingående balans", "Fondemission", "Nyemission", "Erh. akieägartillskott", "Erh./Lämn. koncernbidrag", "Disp. av fg. års resultat", "Återbetalning aktieägartillskott", "Utdelning", "Årets resultat"};
+    string[] Rubrik = { "Ingående balans", "Fondemission", "Nyemission", "Erh. akieägartillskott", "Erh./Lämn. koncernbidrag", "Disp. av fg. års resultat", "Återbetalning aktieägartillskott", "Utdelning", "Årets resultat" };
 }
 
 <!DOCTYPE html>
@@ -31,88 +31,88 @@
     </div>
 </body>
 </html>
- 
-    <table id="example" class="table table-striped table-bordered" style="width:100%">
-        <!--Förändring av eget kapital-->
-        <thead>
-            <tr>
-                <th colspan="1" width="26%">Benämning</th>
-                <th colspan="1" width="12%">Aktiekapital</th>
-                <th colspan="1" width="12%" contenteditable='true'>Uppskr.fond</th>
-                <th colspan="1" width="12%" contenteditable='true'>Reservfond</th>
-                <th colspan="1" width="12%">Bal. resultat</th>
-                <th colspan="1" width="12%">Årets resultat</th>
-                <th colspan="1" width="14%"><strong>Summa</strong></th>
-            </tr>
-            <tr>
-                <td align="left"><strong>Konto</strong></td>
-                <td align="center" contenteditable='true'>2081</td>
-                <td align="center" contenteditable='true'>2085</td>
-                <td align="center" contenteditable='true'>2086</td>
-                <td align="center" contenteditable='true'>2091</td>
-                <td align="center" contenteditable='true'>2099</td>
-                <td align="center" contenteditable='true'>-</td>
-            </tr>
-            @foreach (var rubrik in Rubrik)
-            {
-            <tr>
-                <td align="left" contenteditable='true'>@rubrik</td>
-                <td align="right" contenteditable='true'></td>
-                <td align="right" contenteditable='true'></td>
-                <td align="right" contenteditable='true'></td>
-                <td align="right" contenteditable='true'></td>
-                <td align="right" contenteditable='true'></td>
-                <td align="right" contenteditable='false'></td>
-            </tr>
-            }
-            <tr>
-                <td align="left"><strong>Utgående balans</strong></td>
-                <td align="right"><strong>@ViewBag.testsumma</strong></td>
-                <td align="right"><strong>@ViewBag.testsumma</strong></td>
-                <td align="right"><strong>@ViewBag.testsumma</strong></td>
-                <td align="right"><strong>@ViewBag.testsumma</strong></td>
-                <td align="right"><strong>@ViewBag.testsumma</strong></td>
-                <td align="right"><strong>@ViewBag.testsumma</strong></td>
-            </tr>
-</table>    
 
-   
-    <table id="example" class="table table-striped table-bordered" style="width:100%">
-        <!--Summarad-->
-        <thead>
-            <tr>
-                <th width="45%" colspan="3">Upplysningar om aktiekapital innevarande år</th>
-                <th width="41%"><strong>Totalsumma enligt bilagan</strong></th>
-                <td width="14%" align="right"><strong>@String.Format("{0:#,###.##}", ViewBag.testsumma)</strong></td>
-            </tr>
-            <tr>
-                <th>Aktiekapital</th>
-                <th>Antal aktier</tdcontenteditable="true">
-                <th>Kvotvärde</th>
-                <th><strong>Saldo enligt huvudbok</strong></th>
-                <td align="right"><strong>@ViewBag.testdiff</strong></td>
-            </tr>
-            <tr>
-                <td align="center" contenteditable="true"></td>
-                <td align="center" contenteditable="true"></td>
-                <td align="center" contenteditable="true"></td>
-                <th><strong>Belopp kvar att specificera</strong></th>
-                <td align ="right"><strong>@ViewBag.testdiff</strong></td>
-            </tr>
+<table id="DataTable" class="table table-striped table-bordered" style="width:100%">
+    <!--Förändring av eget kapital-->
+    <thead>
+        <tr>
+            <th colspan="1" width="26%">Benämning</th>
+            <th colspan="1" width="12%">Aktiekapital</th>
+            <th colspan="1" width="12%" contenteditable='true'>Uppskr.fond</th>
+            <th colspan="1" width="12%" contenteditable='true'>Reservfond</th>
+            <th colspan="1" width="12%">Bal. resultat</th>
+            <th colspan="1" width="12%">Årets resultat</th>
+            <th colspan="1" width="14%"><strong>Summa</strong></th>
+        </tr>
+        <tr>
+            <td align="left"><strong>Konto</strong></td>
+            <td>2081</td>
+            <td>2085</td>
+            <td>2086</td>
+            <td>2091</td>
+            <td>2099</td>
+            <td>-</td>
+        </tr>
         </thead>
-    </table>
+    <tbody>
+        @foreach (var rubrik in Rubrik)
+    {
+        <tr id="beräkningsloop">
+            <td align="left" contenteditable='true'>@rubrik</td>
+            <td class="beräkningsmodell"><input type="text" class="beräknAktiekapital" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell"><input type="text" class="beräknUppskfond" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell"><input type="text" class="beräknReservfond" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell"><input type="text" class="beräknBalResultat" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell"><input type="text" class="beräknÅretsResultat" onchange="value = talformat_2dec(this.value)" /></td>
+            <td><input type="text" class="beräknSumma" readonly="readonly" /></td>
+        </tr>
+}
+        <tr>
+            <td align="left"><strong>Utgående balans</strong></td>
+            <td><strong><input type="text" id="sumAktiekapital" align="right" /></strong></td>
+            <td><strong><input type="text" id="sumUppskfond" align="right" /></strong></td>
+            <td><strong><input type="text" id="sumReservfond" align="right" /></strong></td>
+            <td><strong><input type="text" id="sumBalResultat" align="right" /></strong></td>
+            <td><strong><input type="text" id="sumÅretsResultat" align="right" /></strong></td>
+            <td><strong><input type="text" id="sumSumma" class="delsummaSpec" align="right" /></strong></td>
+        </tr>
+    </tbody>
+</table>
 
-    <p align="right">
-        <a href="#" class="btn btn-success btn-lg">
-            <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Töm bilaga"></span>
-        </a>
-        <a href="#" class="btn btn-success btn-lg">
-            <span class="glyphicon glyphicon-ok" data-toggle="tooltip" title="Klarmarkera bilaga"></span>
-        </a>
-    </p>
+
+<!--Summering av bilaga-->
+<div class="content-wrapper">
+    @Html.Partial("_bilagasummering")
+</div>
+
 
 <!--Konteringsvy-->
 <div class="content-wrapper">
     @Html.Partial("_footer")
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script src="~/Scripts/generella.funktioner.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        //iterate through each textboxes and add keyup
+        //handler to trigger sum event
+        $('tr input').on('input', function () {
+            $('#sumAktiekapital').val(talformat_2dec(calcSum('.beräknAktiekapital')));
+            $('#sumUppskfond').val(talformat_2dec(calcSum('.beräknUppskfond')));
+            $('#sumReservfond').val(talformat_2dec(calcSum('.beräknReservfond')));
+            $('#sumBalResultat').val(talformat_2dec(calcSum('.beräknBalResultat')));
+            $('#sumÅretsResultat').val(talformat_2dec(calcSum('.beräknÅretsResultat')));
+            //$('.beräkningsmodell input').each(function () {
+            //    $('.beräknSumma').val(talformat_2dec(calcSum('.beräkningsmodell input')))
+            //});
+            $('.beräkningsmodell input').each(function () {
+                $('.beräknSumma').val(talformat_2dec(calcSum('.beräkningsmodell input')))
+            });
+
+            $('#sumSumma').val(talformat_2dec(calcSum('.beräknSumma')));
+        });
+    });
+
+</script>
