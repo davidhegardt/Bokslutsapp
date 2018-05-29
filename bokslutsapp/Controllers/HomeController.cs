@@ -35,7 +35,7 @@ namespace Bokslutsapp.Controllers
             return View(Bilagor);
         }
         
-        public ActionResult Huvudbok(string konto, string email)
+        public ActionResult Huvudbok(string konto, string ks)
         {
             var Bilagor = GetBilagor();
             if (!String.IsNullOrEmpty(konto))
@@ -52,7 +52,7 @@ namespace Bokslutsapp.Controllers
                 else
                 {
                         Bilagor = Bilagor.Where(n => n.Beskrivning.ToLower().Contains(konto.ToLower()));
-                 }
+                }
                  
             }
 
@@ -60,6 +60,39 @@ namespace Bokslutsapp.Controllers
 
             return View(Bilagor);
         }
+
+        private IEnumerable<_1930Bank> searchKonto(string kontoString)
+        {
+            int konto;
+            var Bilagor = GetBilagor();
+            if (Int32.TryParse(kontoString, out konto))
+            {
+                Bilagor = Bilagor.Where(s => s.Konto == konto);
+            }
+
+            return Bilagor;
+        }
+
+        private IEnumerable<_1930Bank> searchDatum(string dateString)
+        {
+            DateTime tryTime;
+            var Bilagor = GetBilagor();
+            if (DateTime.TryParse(dateString, out tryTime))
+            {
+                Bilagor = Bilagor.Where(d => d.Datum.Equals(tryTime));
+            }
+
+            return Bilagor;
+        }
+
+        private IEnumerable<_1930Bank> searchBeskrivning (string desc)
+        {
+            var Bilagor = GetBilagor();
+
+            return Bilagor;
+        }
+
+        
 
         [HttpPost]
         public JsonResult Index(string Prefix)
