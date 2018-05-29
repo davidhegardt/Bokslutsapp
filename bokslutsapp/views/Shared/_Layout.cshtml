@@ -81,18 +81,12 @@
                     </ul>
                 </li>
 
-                <span style="float:right;">
-                    <a href="~/Home/Huvudbok" class="btn btn-lg">
-                        <span class="glyphicon glyphicon-book" data-toggle="tooltip" title="Öppna huvudbok"></span>
-                    </a>
-                    <a href="#" class="btn btn-lg">
-                        <span class="glyphicon glyphicon-cog" data-toggle="tooltip" title="Inställningar"></span>
-                    </a>
-                    <a href="#" class="btn btn-lg">
-                        <span onclick="window.print();return false;" class="glyphicon glyphicon-print" data-toggle="tooltip" title="Skriv ut bilaga"></span>
-                    </a>
-                </span>
-                </ul>
+                <!--Printknapp m.m.-->
+                <div class="content-wrapper">
+                    @Html.Partial("_printOptions")
+                </div>
+
+            </ul>
             </div>
     </div>
 

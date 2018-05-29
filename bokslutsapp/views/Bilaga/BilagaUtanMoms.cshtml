@@ -42,19 +42,19 @@
             <th width="14%">Belopp</th>
         </tr>
     </thead>
-        <tbody id="raderBilagaUtanMoms">
-            <tr class="mall1">
-                <td><input type="text" onchange="raderKontroll('#raderBilagaUtanMoms',10)" /></td>
-                <td><input type="text" /></td>
-                <td><input type="text" maxlength="4" onchange="kontoValidering(this.value)"/></td>
-                <td><input type="text" /></td>
-                <td><input type="text" class="beräknKonto" onchange="value = talformat_2dec(this.value)" /></td>
-            </tr>  
-        </tbody>    
-        <tr>
-            <td colspan="4"><strong>Summa</strong></td>
-            <td><strong><input id="summaBilagaUtanMoms" class="delsummaSpec" type="text" readonly="readonly" /></strong></td>
+    <tbody id="raderBilagaUtanMoms">
+        <tr class="mall1">
+            <td><input type="text" onchange="raderKontroll('#raderBilagaUtanMoms',10)" /></td>
+            <td><input type="text" /></td>
+            <td><input type="text" maxlength="4" onchange="kontoValidering(this.value)" /></td>
+            <td><input type="text" /></td>
+            <td><input type="text" class="beräknKonto" onchange="value = talformat_2dec(this.value),calcSum('.beräknKonto')" /></td>
         </tr>
+    </tbody>
+    <tr>
+        <td colspan="4"><strong>Summa</strong></td>
+        <td><strong><input id="summaBilagaUtanMoms" class="delsummaSpec" type="text" readonly="readonly" /></strong></td>
+    </tr>
 </table>
 
 
@@ -70,14 +70,15 @@
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js">
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script src="~/Scripts/generella.funktioner.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
     $(document).ready(function () {
         //iterate through each textboxes and add keyup
         //handler to trigger sum event
         var mall = '#raderBilagaUtanMoms';
-        rader_init(mall,10);
+        rader_init(mall, 10);
 
         $('td').each(function () {
             $(this).keyup(function () {
@@ -91,14 +92,14 @@
     function raderKontroll(mall, radAntStart) {
         if ($(mall).find('tr:last input').val() != "") {
             addRad(mall);
-        }   
+        }
         else if ($(mall).find('tr:last input').val() == "") {
             removeRad(mall, radAntStart);
-        } 
+        }
     }
 
-    function rader_init(mall,radAntStart) { //Funktion som vid initieringen lägger till 4 rader.
-        for (var i = 0; i < (radAntStart-1); i++) {
+    function rader_init(mall, radAntStart) { //Funktion som vid initieringen lägger till 4 rader.
+        for (var i = 0; i < (radAntStart - 1); i++) {
             addRad(mall);
         }
     }
@@ -114,11 +115,11 @@
     function removeRad(mall, radAntStart) {
         lastRad = $(mall).find('tr');
         if (lastRad.length > radAntStart) {
-           // if (this.each() != "") {
-                return $(mall).find('tr:last').remove();
-           // }
+            // if (this.each() != "") {
+            return $(mall).find('tr:last').remove();
+            // }
         }
-    }  
+    }
 
 </script>
 
