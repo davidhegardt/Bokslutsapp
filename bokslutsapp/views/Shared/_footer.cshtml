@@ -85,7 +85,7 @@
 @using (Html.BeginForm())
 {
             @*<td colspan="2"><input type="text" class="BFkonto" onchange="kontoValidering(this.value)" /></td>*@            
-            <td colspan="2">@Html.EditorFor(m => m.First().Konto, new { htmlAttributes = new { @class = "form-control" } })</td>        
+            @*<td colspan="2">@Html.EditorFor(m => m.First().Konto, new { htmlAttributes = new { @class = "form-control" } })</td>*@
 }
             <td colspan="6"><input type="text" class="BFkontonamn" size="1000"/></td>
             <td colspan="1"><input type="text" class="BFks" /></td>

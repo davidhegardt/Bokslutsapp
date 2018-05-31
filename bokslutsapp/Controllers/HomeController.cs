@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 using System.Web;
 using System.Web.Mvc;
 using SieParserLibrary;
@@ -35,9 +36,15 @@ namespace Bokslutsapp.Controllers
             return View(Bilagor);
         }
         
-        public ActionResult Huvudbok(string konto, string ks)
+        public ActionResult Huvudbok(string konto, string ks,string pr,string beskrivning, string verifikation,string datum,string belopp)
         {
             var Bilagor = GetBilagor();
+            if (!String.IsNullOrEmpty(konto)) { Bilagor = searchKonto(konto); } else if (!String.IsNullOrEmpty(ks)) { Bilagor = searchKS(ks); }
+            else if (!String.IsNullOrEmpty(pr)) { Bilagor = searchPR(pr); } else if (!String.IsNullOrEmpty(beskrivning)) { Bilagor = searchBeskrivning(beskrivning); }
+            else if (!String.IsNullOrEmpty(verifikation)) { Bilagor = searchVerfikation(verifikation); } else if (!String.IsNullOrEmpty(datum)) { Bilagor = searchDatum(datum); }
+            else if (!String.IsNullOrEmpty(belopp)) { searchBelopp(belopp); }
+
+            /*
             if (!String.IsNullOrEmpty(konto))
             {
                 int nummer;
@@ -55,7 +62,11 @@ namespace Bokslutsapp.Controllers
                 }
                  
             }
-
+            */
+            if(Bilagor == null)
+            {
+               Bilagor = new List<_1930Bank>();
+            }
             ViewBag.AccountList = Bilagor;
 
             return View(Bilagor);
@@ -89,9 +100,61 @@ namespace Bokslutsapp.Controllers
         {
             var Bilagor = GetBilagor();
 
+            Bilagor = Bilagor.Where(n => n.Beskrivning.ToLower().Contains(desc.ToLower()));
+
             return Bilagor;
         }
 
+        private IEnumerable<_1930Bank> searchKS(string ksString)
+        {
+            var Bilagor = GetBilagor();
+            int ksNumber;
+            if(Int32.TryParse(ksString, out ksNumber))
+            {
+                Bilagor = Bilagor.Where(k => k.Ks == ksNumber);
+            }
+
+            return Bilagor;
+            
+        }
+
+        private IEnumerable<_1930Bank> searchPR(string prString)
+        {
+            var Bilagor = GetBilagor();
+            int prNumber;
+            if(Int32.TryParse(prString, out prNumber))
+            {
+                Bilagor = Bilagor.Where(p => p.Pr == prNumber);
+            }
+
+            return Bilagor;
+        }
+
+        private IEnumerable<_1930Bank> searchBelopp(string beloppString)
+        {
+            var Bilagor = GetBilagor();
+            float belopp;
+            if (float.TryParse(beloppString,NumberStyles.Number,CultureInfo.InvariantCulture, out belopp))
+            {
+                Bilagor = Bilagor.Where(b => Math.Abs(b.Belopp) == Math.Abs(belopp));
+            }
+
+            return Bilagor;
+        }
+
+        private IEnumerable<_1930Bank> searchVerfikation(string verifikation)
+        {
+            var Bilagor = GetBilagor();
+            var parts = verifikation.ToCharArray();
+            string serie = parts[0].ToString();
+            int verNr;
+            if(Int32.TryParse(parts[1].ToString(),out verNr))
+            {
+                Bilagor = Bilagor.Where(bank => bank.Serie.Equals(serie) && bank.VerifikationNr == verNr);
+            }
+
+            return Bilagor;
+        }
         
 
         [HttpPost]

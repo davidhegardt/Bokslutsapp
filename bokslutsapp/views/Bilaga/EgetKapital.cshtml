@@ -14,6 +14,10 @@
     ViewBag.avskiljare = ", ";
 
     string[] Rubrik = { "Ingående balans", "Fondemission", "Nyemission", "Erh. akieägartillskott", "Erh./Lämn. koncernbidrag", "Disp. av fg. års resultat", "Återbetalning aktieägartillskott", "Utdelning", "Årets resultat" };
+    int[] numbers = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    string[] Rubrikclasses = { "ing_balans", "fondemission", "nyemission", "erh_aktie", "erh_lämn", "disp_resultat", "återbet", "utdelning", "årets_resultat" };
+    var rubrikAndClass = Rubrik.Zip(Rubrikclasses, (n, w) => new { Rubriken = n, Klassen = w });
+
 }
 
 <!DOCTYPE html>
@@ -55,18 +59,20 @@
         </tr>
         </thead>
     <tbody>
-        @foreach (var rubrik in Rubrik)
-    {
-        <tr id="beräkningsloop">
-            <td align="left" contenteditable='true'>@rubrik</td>
-            <td class="beräkningsmodell"><input type="text" class="beräknAktiekapital" onchange="value = talformat_2dec(this.value)" /></td>
-            <td class="beräkningsmodell"><input type="text" class="beräknUppskfond" onchange="value = talformat_2dec(this.value)" /></td>
-            <td class="beräkningsmodell"><input type="text" class="beräknReservfond" onchange="value = talformat_2dec(this.value)" /></td>
-            <td class="beräkningsmodell"><input type="text" class="beräknBalResultat" onchange="value = talformat_2dec(this.value)" /></td>
-            <td class="beräkningsmodell"><input type="text" class="beräknÅretsResultat" onchange="value = talformat_2dec(this.value)" /></td>
-            <td><input type="text" class="beräknSumma" readonly="readonly" /></td>
+        @{int i = 0;}
+       @foreach (var rc in rubrikAndClass)            
+{
+        <tr id="@i" class="@rc.Klassen">
+            <td align="left" contenteditable='true'>@rc.Rubriken</td>
+            <td class="beräkningsmodell "><input type="text" class="beräknAktiekapital @i" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell "><input type="text" class="beräknUppskfond @i" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell "><input type="text" class="beräknReservfond @i" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell "><input type="text" class="beräknBalResultat @i" onchange="value = talformat_2dec(this.value)" /></td>
+            <td class="beräkningsmodell "><input type="text" class="beräknÅretsResultat @i" onchange="value = talformat_2dec(this.value)" /></td>
+            <td><input type="text" class="beräknSumma" id="@rc.Klassen" readonly="readonly" /></td>
         </tr>
-}
+            i++;
+        }
         <tr>
             <td align="left"><strong>Utgående balans</strong></td>
             <td><strong><input type="text" id="sumAktiekapital" align="right" /></strong></td>
@@ -104,13 +110,15 @@
             $('#sumReservfond').val(talformat_2dec(calcSum('.beräknReservfond')));
             $('#sumBalResultat').val(talformat_2dec(calcSum('.beräknBalResultat')));
             $('#sumÅretsResultat').val(talformat_2dec(calcSum('.beräknÅretsResultat')));
-            //$('.beräkningsmodell input').each(function () {
-            //    $('.beräknSumma').val(talformat_2dec(calcSum('.beräkningsmodell input')))
-            //});
-            $('.beräkningsmodell input').each(function () {
-                $('.beräknSumma').val(talformat_2dec(calcSum('.beräkningsmodell input')))
+            
+            var Rubrik = ["ing_balans", "fondemission", "nyemission", "erh_aktie", "erh_lämn", "disp_resultat", "återbet", "utdelning", "årets_resultat" ];
+            var Varden = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+            $.each(Rubrik, function (index, tag) {
+                $('.' + tag).each(function () {
+                    $('#' + tag).val(talformat_2dec(calcSum('.' + Varden[index])));
+                });
             });
-
+            
             $('#sumSumma').val(talformat_2dec(calcSum('.beräknSumma')));
         });
     });
