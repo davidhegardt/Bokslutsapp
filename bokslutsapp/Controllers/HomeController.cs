@@ -13,6 +13,7 @@ namespace Bokslutsapp.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -36,9 +37,59 @@ namespace Bokslutsapp.Controllers
             return View(Bilagor);
         }
         
-        public ActionResult Huvudbok(string konto, string ks,string pr,string beskrivning, string verifikation,string datum,string belopp)
+        public ActionResult Huvudbok(string konto, string ks,string pr,string beskrivning, string verifikation,string datum,string belopp, string sortOrder)
         {
             var Bilagor = GetBilagor();
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.KsSortParam = sortOrder == "ks_sort" ? "ks_desc" : "ks_sort";
+            ViewBag.DescSortParm = sortOrder == "desc_sort" ? "desc_desc" : "desc_sort";
+            ViewBag.VerSortParm = sortOrder == "ver_sort" ? "ver_desc" : "ver_sort";
+            ViewBag.DateSortParm = sortOrder == "datum_sort" ? "datum_desc" : "datum_sort";
+            ViewBag.BeloppSortParm = sortOrder == "belopp_sort" ? "belopp_desc" : "belopp_sort";
+            //var Bilagor = GetBilagor();
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Bilagor = Bilagor.OrderBy(k => k.Konto);
+                    break;
+                case "ks_sort":
+                    Bilagor = Bilagor.OrderBy(k => k.Ks);
+                    break;
+                case "ks_desc":
+                    Bilagor = Bilagor.OrderByDescending(k => k.Ks);
+                    break;
+                case "desc_sort":
+                    Bilagor = Bilagor.OrderBy(k => k.Beskrivning);
+                    break;
+                case "desc_desc":
+                    Bilagor = Bilagor.OrderByDescending(k => k.Beskrivning);
+                    break;
+                case "ver_sort":
+                    Bilagor = Bilagor.OrderBy(k => k.Serie);
+                    break;
+                case "ver_desc":
+                    Bilagor = Bilagor.OrderByDescending(k => k.Serie);
+                    break;
+                case "datum_sort":
+                    Bilagor = Bilagor.OrderBy(k => k.Datum);
+                    break;
+                case "datum_desc":
+                    Bilagor = Bilagor.OrderByDescending(k => k.Datum);
+                    break;
+                case "belopp_sort":
+                    Bilagor = Bilagor.OrderBy(k => k.Belopp);
+                    break;
+                case "belopp_desc":
+                    Bilagor = Bilagor.OrderByDescending(k => k.Belopp);
+                    break;
+            }
+            /*
+            ViewBag.AccountList = Bilagor;
+
+            return View(Bilagor);
+            */
+
             if (!String.IsNullOrEmpty(konto)) { Bilagor = searchKonto(konto); } else if (!String.IsNullOrEmpty(ks)) { Bilagor = searchKS(ks); }
             else if (!String.IsNullOrEmpty(pr)) { Bilagor = searchPR(pr); } else if (!String.IsNullOrEmpty(beskrivning)) { Bilagor = searchBeskrivning(beskrivning); }
             else if (!String.IsNullOrEmpty(verifikation)) { Bilagor = searchVerfikation(verifikation); } else if (!String.IsNullOrEmpty(datum)) { Bilagor = searchDatum(datum); }
@@ -67,6 +118,23 @@ namespace Bokslutsapp.Controllers
             {
                Bilagor = new List<_1930Bank>();
             }
+            ViewBag.AccountList = Bilagor;
+
+            return View(Bilagor);
+        }
+
+        public ActionResult Sortering(string sortOrder)
+        {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var Bilagor = GetBilagor();
+
+            switch(sortOrder)
+            {
+                case "name_desc":
+                    Bilagor = Bilagor.OrderByDescending(k => k.Konto);
+                    break;
+            }
+
             ViewBag.AccountList = Bilagor;
 
             return View(Bilagor);
@@ -134,7 +202,7 @@ namespace Bokslutsapp.Controllers
         {
             var Bilagor = GetBilagor();
             float belopp;
-            if (float.TryParse(beloppString,NumberStyles.Number,CultureInfo.InvariantCulture, out belopp))
+            if (float.TryParse(beloppString, out belopp))
             {
                 Bilagor = Bilagor.Where(b => Math.Abs(b.Belopp) == Math.Abs(belopp));
             }
@@ -150,7 +218,7 @@ namespace Bokslutsapp.Controllers
             int verNr;
             if(Int32.TryParse(parts[1].ToString(),out verNr))
             {
-                Bilagor = Bilagor.Where(bank => bank.Serie.Equals(serie) && bank.VerifikationNr == verNr);
+                Bilagor = Bilagor.Where(bank => bank.Serie.ToLower().Contains(serie.ToLower()) && bank.VerifikationNr == verNr);
             }
 
             return Bilagor;

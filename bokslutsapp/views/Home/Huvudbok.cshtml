@@ -117,6 +117,33 @@
     .sticky + .content {
         padding-top: 302px;
     }
+
+    .inputSmall {
+        width: 25px;
+        background-color: #f1f1f1;
+    }
+
+    .spacing {
+        margin-left: 30px;
+    }
+
+    .extraSpace {
+        margin-left: -20px;
+        width:160px;
+    }
+
+    .xlSpace {
+        margin-left: 70px;
+    }
+
+    #myHeader {
+        margin-left: 40px;
+    }
+
+    input.formControl {
+        width:auto;
+    }
+
 </style>
 
 <!--BILAGA-->
@@ -135,25 +162,37 @@
 {
 
     <input type="submit" value="Submit" hidden="hidden" />
-    
+
     <table id="HBtableHeader">
         <tr>
-            <th id="labelKonto" width="15%">Konto</th>
-            <th id="labelKs" width="8%">Ks</th>
+            <th id="labelKonto" width="15%">
+                @Html.ActionLink("Konto", "Huvudbok", new { sortOrder = ViewBag.NameSortParm })
+            </th>
+            <th id="labelKs" width="8%">
+            @Html.ActionLink("Ks", "Huvudbok", new { sortOrder = ViewBag.KsSortParam, })
+            </th>
             <th id="labelPr" width="8%">Pr</th>
-            <th id="labelBesk" width="24%">Benämning</th>
-            <th id="labelVerNr" width="15%">Verifikation</th>
-            <th id="labelDatum" width="15%">Datum</th>
-            <th id="labelBelopp" width="15%">Belopp</th>
+            <th id="labelBesk" width="24%">
+            @Html.ActionLink("Benämning", "Huvudbok", new { sortOrder = ViewBag.DescSortParm, @Style = "margin-left:-10px" })
+            </th>
+            <th id="labelVerNr" width="15%">
+            @Html.ActionLink("Verifikation", "Huvudbok", new { sortOrder = ViewBag.VerSortParm })
+            </th>
+            <th id="labelDatum" width="15%">
+            @Html.ActionLink("Datum", "Huvudbok", new { sortOrder = ViewBag.DateSortParm })
+            </th>
+            <th id="labelBelopp" width="15%">
+            @Html.ActionLink("Belopp", "Huvudbok", new { sortOrder = ViewBag.BeloppSortParm })
+            </th>
         </tr>
         <tr>
             <th>@Html.TextBox("konto", null, new { @class = "input" })</th>
-            <th>@Html.TextBox("ks", null, new { @class = "input" })</th>
-            <th>@Html.TextBox("pr", null, new { @class = "input" })</th>
-            <th>@Html.TextBox("beskrivning", null, new { @class = "input" })</th>
-            <th>@Html.TextBox("verifikation", null, new { @class = "input" })</th>
-            <th>@Html.TextBox("datum", null, new { @class = "input" })</th>
-            <th>@Html.TextBox("belopp", null, new { @class = "input" })</th>
+            <th>@Html.TextBox("ks", null, new { @class = "inputSmall" })</th>
+            <th>@Html.TextBox("pr", null, new { @class = "inputSmall" })</th>
+            <th>@Html.TextBox("beskrivning", null, new { @class = "input extraSpace" })</th>
+            <th>@Html.TextBox("verifikation", null, new { @class = "input xlSpace" })</th>
+            <th>@Html.TextBox("datum", null, new { @class = "input spacing" })</th>
+            <th>@Html.TextBox("belopp", null, new { @class = "input xlSpace" })</th>
         </tr>
         
     </table>

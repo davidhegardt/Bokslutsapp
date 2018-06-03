@@ -18,7 +18,8 @@ namespace Bokslutsapp.Controllers
 
         public ActionResult Bank()
         {
-            var Bilagor = GetBilagor();            
+            var Bilagor = GetBilagor();
+            Bilagor = Bilagor.Where(b => b.Belopp != 0);
             return View(Bilagor);
         }
 
@@ -28,6 +29,8 @@ namespace Bokslutsapp.Controllers
             var root = AppDomain.CurrentDomain.BaseDirectory;
             string path = root + "/Assets/test.se";            
             List<Konto> kontoLista = manager.getKontoList(path);
+            var verifikationer = manager.setupVerifications(path);
+            var transaktioner = manager.getTransactions();
             int currId = 0;
             List<_1930Bank> bankLista = new List<_1930Bank>();
             
@@ -37,7 +40,7 @@ namespace Bokslutsapp.Controllers
                 _1930Bank newBank = new _1930Bank();
                 newBank.Konto = k.Kontonummer;
                 newBank.Beskrivning = k.Kontonamn;
-                newBank.Belopp = 1237374.58f;
+                newBank.Belopp = k.getSaldoResultat();
                 newBank.Id = currId;
                 newBank.Ks = 1;
                 newBank.Pr = 1;
