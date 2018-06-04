@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Bokslutsapp.Models;
 using SieParserLibrary;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace Bokslutsapp.Controllers
 {
@@ -21,6 +23,28 @@ namespace Bokslutsapp.Controllers
             var Bilagor = GetBilagor();
             Bilagor = Bilagor.Where(b => b.Belopp != 0);
             return View(Bilagor);
+        }
+
+        [HttpPost]
+        public ActionResult SaveOrder(String utbetalning)
+        {
+            //var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(utbetalning[0]);
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Utbetalning[] persons = js.Deserialize<Utbetalning[]>(utbetalning);
+            List<Utbetalning> utbetalningar = persons.ToList();
+
+            utbetalningar.RemoveAll(r => r.konto == null);
+            utbetalningar.RemoveAll(r => r.konto == "");
+            int count = utbetalningar.Count;
+            /*
+            for(int i = 0; i < inputData.Count(); i++)
+            {
+                Console.WriteLine(inputData[i]);
+            }
+            */
+
+            return Json(new { data = count }, JsonRequestBehavior.AllowGet);
         }
 
         private IEnumerable<_1930Bank> GetBilagor()
@@ -69,6 +93,7 @@ namespace Bokslutsapp.Controllers
         public ActionResult Värdepapper()
         {
             var Bilagor = GetBilagor();
+            Bilagor = Bilagor.Where(b => b.Belopp != 0);
             return View(Bilagor);
         }
 

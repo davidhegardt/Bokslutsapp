@@ -24,6 +24,10 @@
         border: none;
         text-align: center;
     }
+
+    .input-group{
+        width:150px;
+    }
 </style>
 
 <!--Sidhuvud-->
@@ -58,7 +62,7 @@
     </thead>
 </table>
 
-<table id="example" class="table table-striped table-bordered" style="width:100%">
+<table id="bokf_utbetal" class="table table-striped table-bordered" style="width:100%">
     <!--Avstämning bokförda uttag-->
     <thead>
         <tr>
@@ -71,17 +75,24 @@
         @for (var i = 0; i < 3; i++)
         {
             <tr>
-                <td colspan="1"><input type="text" /></td>
-                <td colspan="1"><input type="text" /></td>
-                <td colspan="8"><input type="text" /></td>
-                <td colspan="1"><input type="text" onchange="kontoValidering(this.value)" /></td>
-                <td colspan="1"><input type="text" class="beräknBokfUttag" onchange="value=talformat_2dec(this.value)" /></td>
+                <td colspan="1">
+                    <div class="input-group date" data-provide="datepicker">
+                        <input type="text" name="datum" class="datum" /><div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                        </div>
+</td>
+                <td colspan="1"><input type="text" name="referens"/></td>
+                <td colspan="8"><input type="text" name="titel"/></td>
+                <td colspan="1"><input type="text" name="konto" onchange="kontoValidering(this.value)" /></td>
+                <td colspan="1"><input type="text" name="belopp" class="beräknBokfUttag" onchange="value=talformat_2dec(this.value)" /></td>
             </tr>
         }
         <tr>
             <td colspan="11"><strong>Summa</strong></td>
             <td colspan="1"><strong><input id="summaBokfUttag" class="delsummaSpec" type="text" readonly="readonly" /></strong></td>
         </tr>
+        
 </table>
 <table id="example" class="table table-striped table-bordered" style="width:100%">
     <!--Avstämning bokförda insättningar-->
@@ -147,18 +158,19 @@
         {
             <tr>
                 <td colspan="1"><input type="text" /></td>
-                <td colspan="1"><input type="text" /></td>
-                <td colspan="8"><input type="text" /></td>
-                <td colspan="1"><input type="text" onchange="kontoValidering(this.value)" /></td>
-                <td colspan="1"><input type="text" class="beräknEjBokfInsättn" onchange="value=talformat_2dec(this.value)" /></td>
-            </tr>
+
+                    <td colspan="1"><input type="text" /></td>
+                    <td colspan="8"><input type="text" /></td>
+                    <td colspan="1"><input type="text" onchange="kontoValidering(this.value)" /></td>
+                    <td colspan="1"><input type="text" class="beräknEjBokfInsättn" onchange="value=talformat_2dec(this.value)" /></td>
+</tr>
         }
         <tr>
             <th colspan="11"><strong>Summa</strong></th>
             <td colspan="1"><strong><input id="summaEjBokfInsättn" class="delsummaSpec" type="text" readonly="readonly" /></strong></td>
         </tr>
 </table>
-
+<button type="button" class="btn btn-primary" id="SaveOrder">Save Order</button>
 <!--Summering av bilaga-->
 <div class="content-wrapper">
     @Html.Partial("_bilagasummering")
@@ -171,9 +183,70 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+
 <script src="~/Scripts/generella.funktioner.js"></script>
 <script>
     $(document).ready(function () {
+        $('.error').hide();
+        $('.datum').datepicker();
+
+        $('#SaveOrder').click(function () {
+            var utbelningar = [];
+            var testdata = [];
+            $('#bokf_utbetal thead tr').each(function () {
+                utbelningar.push({
+                    datum: $('td input[name="datum"]', this).val(),
+                    referens: $('td input[name="referens"]', this).val(),
+                    titel: $('td input[name="titel"]', this).val(),
+                    konto: $('td input[name="konto"]', this).val(),
+                    belopp: $('td input[name="belopp"]', this).val(),
+                });
+            });
+            /*
+            utbelningar = jQuery.grep(utbelningar, function (n, i) {
+                return (i !== "" && i != null);
+            });
+            */
+
+            
+            $.each(utbelningar, function (index, value) {
+                if (value !== undefined) {
+                    console.log(value);
+                    testdata.push(value);
+                }
+            });
+            testdata = JSON.stringify(utbelningar);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SaveOrder", "Bilaga")',
+                traditional: true,
+                data: { utbetalning: testdata },
+                success: function (response) {
+                    /*
+                    if (response.data == true) {
+                        alert("Utbelning skapad");
+                    } else {
+                        alert("Something wrong");
+                    }
+                    */
+                    alert(response.data + " Utbetalningar skapade");
+                },
+                error: function (error) {
+                    alert("Something wrong");
+                }
+            })
+
+
+        });
+
+        function ValidateDate(dtValue)
+        {
+            var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/);
+            return dtRegex.test(dtValue);            
+        }
+
+
         //iterate through each textboxes and add keyup
         //handler to trigger sum event
 
